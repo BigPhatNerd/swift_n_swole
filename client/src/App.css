@@ -1,0 +1,44 @@
+/* Global Styles */
+
+:root {
+    --primary-color: #8C0000;
+    --dark-color: #343a40;
+    --light-color: #f4f4f4;
+    --danger-color: #dc3545;
+    --success-color: #28a745;
+    text-align: center;
+
+}
+
+.color-nav {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.navbar-light .navbar-brand {
+    color: white;
+}
+
+#basic-navbar-nav>div>a {
+    color: white;
+}
+
+#basic-nav-dropdown {
+    color: white;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #232323;
+    color: white;
+    text-align: center;
+}
