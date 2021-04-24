@@ -7,7 +7,7 @@ const UserRegistration = () =>{
 
 
 const registrationContext = useContext(RegistrationContext);
-const { product, user, setProduct, register, setAlert, setEmail } = registrationContext;
+const { product, user, setProduct, register, setAlert, setEmail, setName } = registrationContext;
 
 const [formData, setFormData] = useState({
   firstName: '',
@@ -18,6 +18,8 @@ const [formData, setFormData] = useState({
   password2: ''
 })
 const { firstName, lastName, email, password, password2 } = formData;
+console.log("UserRegistration")
+console.log({registrationContext})
 const onChange = e =>{
  
   setFormData({...formData, [e.target.name]: e.target.value })
@@ -32,6 +34,7 @@ const onSubmit = e =>{
    setAlert('Passwords do not match', 'dark');
   } else {
 setEmail(email);
+setName(firstName + " " + lastName)
 const eventId = product.id;
 register({firstName, lastName, email, password, eventId});
 

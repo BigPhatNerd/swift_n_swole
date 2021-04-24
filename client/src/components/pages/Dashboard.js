@@ -1,7 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Button } from 'react-bootstrap';
+import { Link, Redirect } from 'react-router-dom';
+import { Container, Row } from 'react-bootstrap';
 import Spinner from '../Spinner';
+import DashboardActions from '../dashboard/DashboardActions';
+import TeamMembers from '../dashboard/TeamMembers';
+import RegistrationDescription from '../dashboard/RegistrationDescription';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
@@ -11,24 +14,30 @@ const { getCurrentProfile, profile, loading, user } = registrationContext;
 
 useEffect(() =>{
 getCurrentProfile();
-},[profile])
-
-
+},[])
+console.log("In Dashboard");
+console.log({registrationContext})
 	return(
 	loading && profile === null ?(
 		<Spinner />): (
 <Container>
-	<Row>
-		<h1>Dashboard</h1>
+	{profile?.teamName !== "" && 
 		
-	</Row>
-	<Row>
+		<h1>Team: {profile?.teamName}</h1>
+		}
+		
+		
+	
+	
 		<p>
-			Welcome {user?.email}
+Welcome {user?.name} 
 		</p>
-		</Row>
 		{profile !== null ? (
-<Row>Add a "TeamInfo" component here</Row>
+			<>
+			<RegistrationDescription event={user.eventId}/>
+			<TeamMembers />
+			<DashboardActions />
+</>
 			) : (
 			<>
 			<Row>
@@ -41,7 +50,7 @@ getCurrentProfile();
 			</>)}
 	
 </Container>
-		)
+		) 
 		
 		)
 }

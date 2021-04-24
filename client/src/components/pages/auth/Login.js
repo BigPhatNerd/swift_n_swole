@@ -15,7 +15,8 @@ const { email, password, } = formData;
 const onChange = e =>{
   setFormData({...formData, [e.target.name]: e.target.value })
 }
-
+console.log("In Login");
+console.log({registrationContext})
 const onSubmit = e =>{
   e.preventDefault();
   if(email === '' || password === ''){

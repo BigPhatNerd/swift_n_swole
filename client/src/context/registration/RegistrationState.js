@@ -22,6 +22,7 @@ import {
 	UPDATE_PROFILE,
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
+	SET_NAME
 } from '../types'
 
 import setAuthToken from '../../utils/setAuthToken'
@@ -32,13 +33,77 @@ const RegistrationState = props => {
 		user: {
 			isAuthenticated: false,
 			email: '',
+			name: '',
+			eventId: ''
+
 		},
 		loading: true,
 		alert: [],
 		profile: null,
 	}
+	const config = {
+		 headers: {
+        'Content-Type': 'application/json'
+      }
+	}
 
 	const [state, dispatch] = useReducer(RegistrationReducer, initialState)
+
+//Add Team Members to profile
+const addTeamMembers = async (formData, history) => {
+	try {
+		const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.put('/api/profile/team-member', formData, config);
+    dispatch({
+    	type: UPDATE_PROFILE,
+    	payload: res.data
+    })
+    setAlert('Team Member Added', 'success');
+    history.push('/dashboard');
+	} catch(err) {
+		const errors = err.response.data.errors;
+		if(errors) {
+			errors.forEach(error => setAlert(error.msg, 'danger'))
+		}
+		console.error({err});
+	dispatch({
+		type: PROFILE_ERROR,
+		payload: { msg: err.response.statusText, status: err.response.status }
+	})
+		
+	}
+}
+
+//Delete Team Member
+const deleteTeamMember = async (id) => {
+try {
+	const res = await axios.delete(`/api/profile/team-member/${id}`);
+
+	dispatch({
+		type: UPDATE_PROFILE,
+		payload: res.data
+	});
+	setAlert('Team Member Removed', 'success');
+} catch(err) {
+		console.log({err})
+			const errors = err.response.data.errors
+			if(errors) {
+			errors.forEach(error => setAlert(error.msg, 'danger'))
+		}
+
+			dispatch({
+				type: PROFILE_ERROR,
+				payload: {
+					msg: err.response.StatusText,
+					status: err.response.status,
+				},
+			})
+}
+}
 
 	//Create or update profile
 	const createProfile = async (formData, history, edit = false) => {
@@ -56,13 +121,16 @@ const RegistrationState = props => {
 				payload: res.data,
 			})
 			setAlert(edit ? 'Team Info Updated' : 'Team Created', 'success')
-			if (!edit) {
-				history.push('/dashboard')
-			}
+			// if (!edit) {
+			// 	history.push('/dashboard')
+			// }
+			history.push('/dashboard');
 		} catch (err) {
 			console.log({err})
 			const errors = err.response.data.errors
+			if(errors) {
 			errors.forEach(error => setAlert(error.msg, 'danger'))
+		}
 
 			dispatch({
 				type: PROFILE_ERROR,
@@ -92,6 +160,7 @@ const RegistrationState = props => {
 	}
 	//Load user
 	const loadUser = async () => {
+		console.log("loadUser fired");
 		if (localStorage.token) {
 			setAuthToken(localStorage.token)
 		}
@@ -102,7 +171,7 @@ const RegistrationState = props => {
 				payload: res.data,
 			})
 		} catch (err) {
-			setAlert(err.response.data.msg, 'danger')
+			setAlert(err.response?.data.msg, 'danger')
 			dispatch({
 				type: AUTH_ERROR,
 			})
@@ -125,7 +194,12 @@ const RegistrationState = props => {
 			})
 			loadUser()
 		} catch (err) {
+			console.log({err})
+			if (err.message){
+				setAlert(err.message, 'danger')
+			} else if(err.response.data.msg){
 			setAlert(err.response.data.msg, 'danger')
+		}
 			dispatch({
 				type: LOGIN_FAIL,
 			})
@@ -163,6 +237,12 @@ const RegistrationState = props => {
 		dispatch({
 			type: SET_EMAIL,
 			payload: email,
+		})
+	}
+	const setName = name =>{
+		dispatch({
+			type: SET_NAME,
+			payload: name
 		})
 	}
 
@@ -237,11 +317,15 @@ const RegistrationState = props => {
 				setAlert,
 				register,
 				setEmail,
+				setName,
 				setLoading,
 				login,
 				logout,
 				getCurrentProfile,
-				createProfile
+				createProfile,
+				loadUser,
+				addTeamMembers,
+				deleteTeamMember
 			}}
 		>
 			{props.children}

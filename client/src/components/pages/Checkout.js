@@ -9,6 +9,7 @@ const Checkout = () => {
   }, [])
 const registrationContext = useContext(RegistrationContext);
 const { product, user, setProduct, register, setAlert } = registrationContext;
+console.log("Checkout");
 console.log({registrationContext});
   return (
     <StripeProvider apiKey="pk_test_51IeN17DM571FkYKwNxOvFAFBRx2iCBJRWlDwPQcCJZqfdzD1OGwOcc8xM8u7qb5EtA21ZRcE1vnsyt5dpI4lxWDB00k6KSein3">

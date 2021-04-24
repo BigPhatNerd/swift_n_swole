@@ -4,7 +4,7 @@ import { Container, Row, Button, Form } from 'react-bootstrap';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
-const CreateProfile = ({history}) => {
+const EditTeamName = ({history}) => {
 	const registrationContext = useContext(RegistrationContext)
 	console.log("CreateProfile");
 	console.log({registrationContext});
@@ -19,18 +19,20 @@ const CreateProfile = ({history}) => {
 	const [formData, setFormData] = useState({
 		teamName: '',
 	})
+	useEffect(() => {
+		getCurrentProfile()
+		setFormData({ teamName: loading || !profile.teamName ? '' : profile.teamName})
+	}, [loading])
 	const { teamName } = formData
 	const onChange = e => {
 		setFormData({ ...formData, [e.target.name]: e.target.value })
 	}
 	const onSubmit = e => {
 		e.preventDefault()
-		createProfile(formData, history)
+		createProfile(formData, history, true)
 	}
 
-	useEffect(() => {
-		getCurrentProfile()
-	}, [profile])
+	
 console.log({profile})
 	return loading && profile === null ? (
 <Redirect to='/dashboard' />
@@ -63,4 +65,4 @@ console.log({profile})
 		
 }
 
-export default CreateProfile
+export default EditTeamName

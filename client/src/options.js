@@ -24,14 +24,22 @@ export const options = [
 	name: "Partner",
 	descr: "Partner option virtual",
 	venue: "virtual",
-	price: 75,
+	price: 80,
 	id: 103
 },
 {
 name: "Team",
 	descr: "Team option virtual",
 	venue: "virtual",
-	price: 275,
+	price: 200,
 	id: 104	
-}
+},
+{
+name: "Team",
+	descr: "Team option in person",
+	venue: "virtual",
+	price: 300,
+	id: 104	
+},
+
 ];

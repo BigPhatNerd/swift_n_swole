@@ -7,6 +7,7 @@ export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_EMAIL = 'SET_EMAIL';
+export const SET_NAME = 'SET_NAME';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
