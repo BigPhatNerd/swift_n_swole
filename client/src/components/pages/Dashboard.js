@@ -17,7 +17,7 @@ getCurrentProfile();
 },[])
 console.log("In Dashboard");
 console.log({registrationContext})
-	return(
+	return( !user.isAuthenticated ? <Redirect to='/' /> :
 	loading && profile === null ?(
 		<Spinner />): (
 <Container>
@@ -26,9 +26,6 @@ console.log({registrationContext})
 		<h1>Team: {profile?.teamName}</h1>
 		}
 		
-		
-	
-	
 		<p>
 Welcome {user?.name} 
 		</p>
