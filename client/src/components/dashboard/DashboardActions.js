@@ -13,6 +13,9 @@ const DashboardActions = () => {
 				<Link to="/add-team-members" className="btn btn-primary">
 					Add Members
 				</Link>
+				<Link to="/enter-scores" className="btn btn-primary">
+					Enter Scores
+				</Link>
 			</Row>
 			</Container>
 		

@@ -11,7 +11,6 @@ const UserSchema = new Schema({
 	},
 	eventId: {
 		type: Number,
-		required: true
 	},
 
 	email: {
@@ -25,6 +24,11 @@ const UserSchema = new Schema({
 	},
 	avatar: {
 		type: String
+	},
+	paid: {
+		type: Boolean,
+		default: false
+
 	},
 	date: {
 		type: Date,

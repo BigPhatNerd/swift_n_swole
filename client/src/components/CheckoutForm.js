@@ -12,11 +12,11 @@ import Spinner from './Spinner';
 
 const CheckoutForm = ({ selectedProduct, stripe, email }) => {
   const registrationContext = useContext(RegistrationContext);
-  const { setAlert } = registrationContext;
-  const [receiptUrl, setReceiptUrl] = useState('')
+  const { setAlert, product, loadUser } = registrationContext;
+  const [receiptUrl, setReceiptUrl] = useState('');
 
-console.log({selectedProduct})
-console.log({email})
+console.log('CheckoutForm.js')
+console.log({registrationContext})
   if (selectedProduct === null) {
    <Redirect to='/' />
     return null
@@ -37,9 +37,12 @@ const price = selectedProduct.price * 100;
     const order = await axios.post('http://localhost:5000/stripe/charge', {
       amount: price.toString().replace('.', ''),
       source: token.id,
-      receipt_email: email
+      receipt_email: email,
+      eventId: product.id
     })
     setReceiptUrl(order.data.charge.receipt_url);
+    loadUser();
+
 
   }
 

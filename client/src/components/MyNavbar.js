@@ -6,7 +6,9 @@ import RegistrationContext from '../context/registration/registrationContext';
 
 const MyNavbar = () =>{
   const registrationContext = useContext(RegistrationContext);
-  const { logout } = registrationContext;
+  const { logout, user } = registrationContext;
+  console.log("MyNavbar.js");
+  console.log({registrationContext})
 
   return(
 <Navbar className="color-nav" expand="lg">
@@ -17,7 +19,7 @@ const MyNavbar = () =>{
     <Nav.Link href="#home">Participants</Nav.Link>
       <Nav.Link as={Link} to="/login">Login</Nav.Link>
       <Nav.Link as={Link} to="/login" onClick={logout}>Logout</Nav.Link>
-      <Nav.Link as={Link} to="/dashboard" >Dashboard</Nav.Link>
+   { user.isAuthenticated && user.paid &&  <Nav.Link as={Link} to="/dashboard" >Dashboard</Nav.Link> }
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

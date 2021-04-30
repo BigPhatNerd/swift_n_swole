@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
 	}
 });
 
-// @route   GET api/users
+// @route  POST api/auth
 // @descr   Auth user
 // @access  Public
 router.post('/',
@@ -31,26 +31,25 @@ router.post('/',
         .exists()
     ],
     async (req, res) => {
-        console.log("I am being hit");
+       
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, password } = req.body;
-        console.log("Do I make it here?");
+       
 
         try {
             let user = await User.findOne({ email });
 
             if (!user) {
-                console.log("What the fuck")
-                console.log({res})
+              
+                
                 return res
                     .status(400)
-                    .json({ msg: 'Invalid credentials' });
+                    .json({errors: [{ msg: 'Invalid credentials' }]});
             }
-
-            const isMatch = await bcrypt.compare(password, user.password);
+                      const isMatch = await bcrypt.compare(password, user.password);
 
             if (!isMatch) {
                 return res
@@ -62,11 +61,13 @@ router.post('/',
                     id: user.id
                 }
             }
+            console.log("Do I make it down here in login on the backside?")
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET, { expiresIn: 3600000 },
                 (err, token) => {
                     if (err) throw err;
+                    console.log({token})
                     res.json({ token });
                 });
 

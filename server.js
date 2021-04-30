@@ -5,7 +5,7 @@ const users = require('./routes/api/users');
 const auth = require('./routes/api/auth');
 const profile = require('./routes/api/profile')
 const stripe = require('./routes/stripe');
-
+var cors = require('cors')
 const app = express();
 connectDB();
 
@@ -18,6 +18,7 @@ app.use((_, res, next) => {
   )
   next()
 })
+app.use(cors());
 app.use(express.json({ extended: false }));
 
 app.use('/api/users', users);

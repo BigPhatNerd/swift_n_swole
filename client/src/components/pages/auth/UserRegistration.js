@@ -13,7 +13,6 @@ const [formData, setFormData] = useState({
   firstName: '',
   lastName: '',
   email: '',
-  eventId: registrationContext.product.id,
   password: '',
   password2: ''
 })
@@ -35,8 +34,7 @@ const onSubmit = e =>{
   } else {
 setEmail(email);
 setName(firstName + " " + lastName)
-const eventId = product.id;
-register({firstName, lastName, email, password, eventId});
+register({firstName, lastName, email, password});
 
   }
 }

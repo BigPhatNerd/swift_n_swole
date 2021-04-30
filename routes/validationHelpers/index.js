@@ -40,7 +40,6 @@ const validationHelpers = {
 		check('firstName', 'First name is required').not().isEmpty(),
 		check('lastName', 'Last name is required').not().isEmpty(),
         check('email', 'Please include a valid email').normalizeEmail().isEmail(),
-        check('eventId', 'Event Id is required').not().isEmpty(),
         check('password', 'Please enter a password with six or more characters').isLength({ min: 6 })
     ]
 

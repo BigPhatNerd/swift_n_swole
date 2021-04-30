@@ -15,7 +15,9 @@ const teamMembers = profile.team.map(({_id, participantName, participantEmail, p
       <td>{participantGender}</td>
   <td>{participantCity}</td>
   <td>{participantState}</td>
+  <td>
    <Button style={{marginBottom: '.5rem', marginTop: '.2rem', backgroundColor: '#8C0000', border: 'none'}}onClick={() => deleteTeamMember(_id)}>Delete</Button>
+   </td>
     </tr>
     
 

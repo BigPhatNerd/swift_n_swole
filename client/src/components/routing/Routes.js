@@ -12,6 +12,7 @@ import CreateProfile from '../profile-forms/CreateProfile';
 import PrivateRoute from '../routing/PrivateRoute';
 import EditTeamName from '../profile-forms/EditTeamName';
 import AddTeamMembers from '../profile-forms/AddTeamMembers';
+import EnterScores from '../profile-forms/EnterScores';
 
 
 
@@ -29,6 +30,7 @@ return(
 					<Route exact path='/create-team-profile' component={CreateProfile}/>
 					<PrivateRoute exact path='/edit-team-name' component={EditTeamName} />
 					<PrivateRoute exact path='/add-team-members' component={AddTeamMembers} />
+					<PrivateRoute exact path='/enter-scores' component={EnterScores} />
 					<Route component={NotFound} />
 </Switch>
 </>

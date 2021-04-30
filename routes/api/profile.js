@@ -11,11 +11,8 @@ const { profileValidations } = require('../validationHelpers')
 //@access Private
 router.get('/me', auth, async (req, res) => {
 	try {
-		console.log('req.user: ', req.user)
-		const profile = await Profile.findOne({
-			user: req.user.id,
-		}).populate('User', ['firstName', 'avatar'])
-		console.log({ profile })
+		const profile = await Profile.findOne({ user: req.user.id })
+
 		if (!profile) {
 			return res
 				.status(400)
@@ -46,7 +43,27 @@ router.post('/', [auth, profileValidations], async (req, res) => {
 			{ new: true, upsert: true }
 		)
 
-		return res.json(profile)
+
+		var arr = []
+		const initialArray = () => {
+			for (var i = 0; i < 8; i++) {
+				var obj = {
+					benchPress: 0,
+					deadlift: 0,
+				}
+				 profile.reps.push(obj)
+						}
+			
+			return arr
+		}
+await initialArray();
+		
+	
+	
+		
+		 profile.save();
+	
+
 
 		res.json(profile)
 	} catch (err) {
@@ -76,9 +93,7 @@ router.get('/', async (req, res) => {
 //@access Public
 router.get('/user/:user_id', async (req, res) => {
 	try {
-		const profile = await Profile.findOne({
-			userOne: req.params.user_id,
-		}).populate('User', ['name', 'avatar'])
+		const profile = await Profile.findOne({userOne: req.params.user_id})
 		if (!profile) return res.status(400).json({ msg: 'Profile not found' })
 		res.json(profile)
 	} catch (err) {
@@ -164,27 +179,76 @@ router.put(
 			res.status(500).send('Server Error')
 		}
 	}
-);
+)
+
+// @route    PUT api/profile/add-score/:hour
+// @desc     Add Reps to score
+// @access   Private
+
+router.put(
+	'/add-score/:hour',
+	[
+		auth,
+		[
+			check('benchPress', 'Bench press is required').not().isEmpty(),
+			check('deadlift', 'Deadlift is required').not().isEmpty(),
+		],
+	],
+	async (req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() })
+		}
+		console.log("req.body: ", req.body);
+		const { benchPress, deadlift } = req.body
+
+		const newScore = {
+			benchPress,
+			deadlift,
+		}
+		const position = req.params.hour;
+		console.log({ position })
+
+		try {
+		
+			
+			const profile = await Profile.findOne({ user: req.user.id});
+		
+			profile.reps[position].benchPress = benchPress;
+			profile.reps[position].deadlift = deadlift;
+
+			// profile.save()
+
+			 await profile.save()
+		
+			res.json(profile)
+		} catch (err) {
+			console.error(err.message)
+			res.status(500).send('Server Error')
+		}
+	}
+)
 
 // @route    DELETE api/profile/team-member/:id
 // @desc     Delete Team Member
 // @access   Private
 router.delete('/team-member/:id', auth, async (req, res) => {
 	try {
-		const foundTeamMember = await Profile.findOne({ user: req.user.id });
-		const memberIds = foundTeamMember.team.map(member => member._id.toString());
-		const removeIndex = memberIds.indexOf(req.params.id);
-		if(removeIndex === -1){
-			return res.status(500).json({ msg: "Server error" });
+		const foundTeamMember = await Profile.findOne({ user: req.user.id })
+		const memberIds = foundTeamMember.team.map(member =>
+			member._id.toString()
+		)
+		const removeIndex = memberIds.indexOf(req.params.id)
+		if (removeIndex === -1) {
+			return res.status(500).json({ msg: 'Server error' })
 		} else {
-foundTeamMember.team.splice(removeIndex, 1);
-await foundTeamMember.save();
-return res.status(200).json(foundTeamMember);
+			foundTeamMember.team.splice(removeIndex, 1)
+			await foundTeamMember.save()
+			return res.status(200).json(foundTeamMember)
 		}
-	} catch(err) {
-		
-		console.error(err.message);
-		res.status(500).json({ msg: 'Server Error'});
+	} catch (err) {
+		console.error(err.message)
+		res.status(500).json({ msg: 'Server Error' })
 	}
 })
 

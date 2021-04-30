@@ -1,6 +1,6 @@
 import React, {useEffect, useContext } from 'react';
 import { Container, Row  } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import ChooseEventModal from '../modals/ChooseEventModal';
 import RegistrationContext from '../../context/registration/registrationContext';
@@ -8,15 +8,14 @@ import RegistrationContext from '../../context/registration/registrationContext'
 
 const Landing = () => {
 	const registrationContext = useContext(RegistrationContext);
-const { loadUser } = registrationContext;
+const { loadUser, user, setAlert } = registrationContext;
 
-useEffect(() =>{
-	loadUser();
-}, [])
+
 return(
 	<Container>
 	<Row >
 	<h1>Awesome landing page</h1>
+	{!user.paid && <h2> You have not completed the payment portion of registration. </h2>}
 	</Row>
 	<Row>
 <Link to='/login' className="btn btn-primary">Login</Link>

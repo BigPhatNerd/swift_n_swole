@@ -31,7 +31,8 @@ const RegistrationReducer = (state, action) => {
 		case PROFILE_ERROR:
 		return {
 			...state,
-			loading: false
+			loading: false,
+			error: action.payload
 		};
 		case CLEAR_PROFILE:
 		return {
@@ -59,6 +60,7 @@ const RegistrationReducer = (state, action) => {
 			},
 			loading: false,
 			alert: []
+
 		};
 		case REGISTER_FAIL:
 		case AUTH_ERROR:
@@ -90,7 +92,7 @@ const RegistrationReducer = (state, action) => {
 		case REMOVE_ALERT: 
 		return {
 			...state,
-			alert: []
+			alert: state.alert.filter(alert => alert.id !== action.payload)
 		};
 		case SET_EMAIL:
 		console.log("action.payload in SET EMAIL: ", action.payload);
@@ -121,7 +123,9 @@ const RegistrationReducer = (state, action) => {
 				isAuthenticated: true,
 				name: action.payload?.firstName,
 				email: action.payload?.email,
-				eventId: action.payload?.eventId
+				eventId: action.payload?.eventId,
+				paid: action.payload?.paid
+
 			}
 		}
 	

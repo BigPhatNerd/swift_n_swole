@@ -53,6 +53,19 @@ const ProfileSchema = new Schema({
     },
 }
 ], 
+reps: [
+{
+    benchPress: {
+        type: Number,
+        required: true,
+    },
+    deadlift: {
+        type: Number,
+        required: true
+    }
+}
+],
+
     date: {
         type: Date,
         default: Date.now,

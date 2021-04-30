@@ -34,20 +34,49 @@ const RegistrationState = props => {
 			isAuthenticated: false,
 			email: '',
 			name: '',
-			eventId: ''
+			eventId: '',
+			paid: false
 
 		},
 		loading: true,
 		alert: [],
 		profile: null,
+		error: {}
 	}
-	const config = {
-		 headers: {
-        'Content-Type': 'application/json'
-      }
-	}
+	
 
 	const [state, dispatch] = useReducer(RegistrationReducer, initialState)
+
+// Enter Scores by the hour
+const enterScore = async (formData, hour, history) => {
+	try {
+			const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+   
+    const res = await axios.put(`/api/profile/add-score/${hour}`, formData, config);
+    console.log("res.data: ", res.data);
+    dispatch({
+    	type: UPDATE_PROFILE,
+    	payload: res.data
+    })
+    setAlert('Reps Added Successfully', 'success');
+	} catch(err) {
+		const errors = err.response.data.errors;
+		if(errors) {
+			errors.forEach(error => setAlert(error.msg, 'danger'))
+		}
+		console.error({err});
+	dispatch({
+		type: PROFILE_ERROR,
+		payload: { msg: err.response.statusText, status: err.response.status }
+	})
+	}
+}
+
+
 
 //Add Team Members to profile
 const addTeamMembers = async (formData, history) => {
@@ -145,7 +174,9 @@ try {
 	//Get current user's profile:
 	const getCurrentProfile = async () => {
 		try {
-			const res = await axios.get('/api/profile/me')
+			console.log("at least hit this")
+			const res = await axios.get('/api/profile/me');
+			console.log("res.data in getCurrentProfile: ", res.data);
 			dispatch({
 				type: GET_PROFILE,
 				payload: res.data,
@@ -155,6 +186,11 @@ try {
 			console.log(err.response)
 			dispatch({
 				type: PROFILE_ERROR,
+				payload: {
+					msg: err.response.StatusText,
+					status: err.response.status,
+				},
+
 			})
 		}
 	}
@@ -165,13 +201,15 @@ try {
 			setAuthToken(localStorage.token)
 		}
 		try {
-			const res = await axios.get('/api/auth')
+			const res = await axios.get('/api/auth');
+			console.log("res.data: ", res.data)
 			dispatch({
 				type: USER_LOADED,
 				payload: res.data,
 			})
 		} catch (err) {
-			setAlert(err.response?.data.msg, 'danger')
+			console.log({err})
+			
 			dispatch({
 				type: AUTH_ERROR,
 			})
@@ -194,12 +232,14 @@ try {
 			})
 			loadUser()
 		} catch (err) {
-			console.log({err})
-			if (err.message){
-				setAlert(err.message, 'danger')
-			} else if(err.response.data.msg){
-			setAlert(err.response.data.msg, 'danger')
-		}
+			console.log({ err})
+		const errors = err.response.data.errors
+			if (errors) {
+				errors.forEach(error => {
+					
+					setAlert(error.msg, 'danger')
+				})
+			}
 			dispatch({
 				type: LOGIN_FAIL,
 			})
@@ -215,14 +255,12 @@ try {
 	//Set alert(likely not used)
 	const setAlert = (msg, type) => {
 		const id = uuid()
-		console.log('in setAlert')
-		console.log({ msg })
-		console.log({ type })
+	
 		dispatch({
 			type: SET_ALERT,
 			payload: { msg, type, id },
 		})
-		setTimeout(() => dispatch({ type: REMOVE_ALERT }), 5000)
+		setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), 5000)
 	}
 
 	//Set the product to be put into Stripe
@@ -252,40 +290,32 @@ try {
 		lastName,
 		email,
 		password,
-		eventId,
+	
 	}) => {
-		console.log('Does register get hit?')
-
+		
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		}
-		const body = { firstName, lastName, email, password, eventId }
+		const body = { firstName, lastName, email, password }
 
 		try {
-			console.log('Here I am ')
-			console.log({ body })
+			
 			setLoading()
 			const res = await axios.post('/api/users', body, config)
-			console.log({ res })
+		
 
 			dispatch({
 				type: REGISTER_SUCCESS,
 				payload: res.data,
 			})
 		} catch (err) {
-			console.log({ err })
+		
 			const errors = err.response.data.errors
-			console.log({ errors })
 			if (errors) {
-				console.log(
-					'There was an error registration, dispatch SET_ALERT'
-				)
-				//Come back to this and figure out how to import
-
 				errors.forEach(error => {
-					console.log({ error })
+					
 					setAlert(error.msg, 'danger')
 				})
 			}
@@ -313,6 +343,7 @@ try {
 				loading: state.loading,
 				alert: state.alert,
 				profile: state.profile,
+				error: state.error,
 				setProduct,
 				setAlert,
 				register,
@@ -325,7 +356,8 @@ try {
 				createProfile,
 				loadUser,
 				addTeamMembers,
-				deleteTeamMember
+				deleteTeamMember,
+				enterScore
 			}}
 		>
 			{props.children}
