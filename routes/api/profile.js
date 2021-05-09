@@ -6,6 +6,19 @@ const auth = require('../../middleware/auth')
 const { check, validationResult } = require('express-validator/check')
 const { profileValidations } = require('../validationHelpers')
 
+//@route GET api/profile/all
+//@desc Get all users profiles
+//@access Public
+router.get('/all', async (req, res) => {
+	try {
+		const profile = await Profile.find({})
+		res.json(profile)
+	} catch (err) {
+		console.error(err.message)
+		res.status(500).send('Server Error')
+	}
+})
+
 //@route GET api/profile/me
 //@desc Get current users profile
 //@access Private
@@ -43,27 +56,24 @@ router.post('/', [auth, profileValidations], async (req, res) => {
 			{ new: true, upsert: true }
 		)
 
-
 		var arr = []
 		const initialArray = () => {
 			for (var i = 0; i < 8; i++) {
 				var obj = {
 					benchPress: 0,
 					deadlift: 0,
+					hasSubmitted: false,
 				}
-				 profile.reps.push(obj)
-						}
-			
+				profile.reps.push(obj)
+			}
+
 			return arr
 		}
-await initialArray();
-		
-	
-	
-		
-		 profile.save();
-	
+		await initialArray()
+		profile.miles.total = 0;
+		profile.miles.hasSubmitted = false;
 
+		profile.save()
 
 		res.json(profile)
 	} catch (err) {
@@ -93,7 +103,7 @@ router.get('/', async (req, res) => {
 //@access Public
 router.get('/user/:user_id', async (req, res) => {
 	try {
-		const profile = await Profile.findOne({userOne: req.params.user_id})
+		const profile = await Profile.findOne({ userOne: req.params.user_id })
 		if (!profile) return res.status(400).json({ msg: 'Profile not found' })
 		res.json(profile)
 	} catch (err) {
@@ -199,28 +209,30 @@ router.put(
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() })
 		}
-		console.log("req.body: ", req.body);
+		console.log('req.body: ', req.body)
 		const { benchPress, deadlift } = req.body
 
 		const newScore = {
 			benchPress,
 			deadlift,
 		}
-		const position = req.params.hour;
+		const position = req.params.hour
 		console.log({ position })
 
 		try {
-		
-			
-			const profile = await Profile.findOne({ user: req.user.id});
-		
-			profile.reps[position].benchPress = benchPress;
-			profile.reps[position].deadlift = deadlift;
+			const profile = await Profile.findOne({ user: req.user.id })
+			const insertInfo = {
+				benchPress,
+				deadlift,
+				hasSubmitted: true,
+			}
+
+			profile.reps[position] = insertInfo
 
 			// profile.save()
 
-			 await profile.save()
-		
+			await profile.save()
+
 			res.json(profile)
 		} catch (err) {
 			console.error(err.message)
@@ -228,6 +240,33 @@ router.put(
 		}
 	}
 )
+// @route    PUT api/profile/add-miles
+// @desc     Add Miles to score
+// @access   Private
+
+router.put('/add-miles', auth, async (req, res) => {
+	const errors = validationResult(req)
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() })
+	}
+	console.log('req.body: ', req.body)
+	const { total } = req.body
+	try {
+		const profile = await Profile.findOne({ user: req.user.id })
+		const insertInfo = {
+			total,
+			hasSubmitted: true,
+		}
+
+		profile.miles = insertInfo;
+		await profile.save();
+
+		res.json(profile)
+	} catch (err) {
+		console.error(err.message)
+		res.status(500).send('Server Error')
+	}
+})
 
 // @route    DELETE api/profile/team-member/:id
 // @desc     Delete Team Member

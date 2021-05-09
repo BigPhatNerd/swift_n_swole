@@ -5,9 +5,11 @@ import { Container, Row, Button, Form } from 'react-bootstrap';
 import RegistrationContext from '../../context/registration/registrationContext';
 
 const CreateProfile = ({history}) => {
+	console.log("I USE THIS ONE!!")
 	const registrationContext = useContext(RegistrationContext)
 	console.log("CreateProfile");
 	console.log({registrationContext});
+	const { user } = registrationContext;
 
 	const {
 		createProfile,
@@ -18,6 +20,7 @@ const CreateProfile = ({history}) => {
 	//Later add a place for team photo
 	const [formData, setFormData] = useState({
 		teamName: '',
+		eventId: user.eventId
 	})
 	const { teamName } = formData
 	const onChange = e => {

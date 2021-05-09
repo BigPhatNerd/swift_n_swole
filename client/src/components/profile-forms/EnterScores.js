@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Row, Button, Form, Accordion, Card } from 'react-bootstrap';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
@@ -14,6 +15,7 @@ const EnterScores = ({history}) => {
 		getCurrentProfile,
 		profile,
 		loading,
+		enterMiles
 	} = registrationContext
 	//Later add a place for team photo
 	console.log({profile})
@@ -31,18 +33,23 @@ const obj ={
 		return arr
 	}
 	const [formData, setFormData] = useState(setArray())
-	const [hourOne, setHourOne] = useState(false);
+	
+
+	const [mileageData, setMileageData] = useState({ total: 0 });
+
+
 
 	useEffect(() => {
 		getCurrentProfile()
-		setFormData(setArray())
+		setFormData(setArray());
+		setMileageData({ total: loading || !profile?.miles?.total ? '' : profile.miles.total})
 	}, [loading])
 	const { benchPress, deadlift } = formData
-	
+
 	const onChange = i => e => {
 		console.log({i});
 		console.log("e.target.name: ", e.target.name);
-		const thing = e.target.name
+		
 		let newArr = [...formData];
 		newArr[i] = {...newArr[i],[e.target.name]: parseInt(e.target.value) };
 		console.log("newArr[index]: ", newArr[i]);
@@ -52,6 +59,16 @@ const obj ={
 		console.log({formData})
 	}
 
+	const onMileChange = e =>{
+setMileageData({ ...mileageData, [e.target.name]: e.target.value })
+console.log({mileageData})
+	};
+	const onMileageSubmit= e =>{
+		e.preventDefault();
+		document.querySelector(`#toggle-miles`).click();
+		enterMiles(mileageData, history)
+	}
+
 	
 	const onSubmit = (e) => {
 		e.preventDefault()
@@ -59,9 +76,11 @@ const obj ={
 
 		console.log("e.target.getAttribute in onSubmit: ",e.target.getAttribute('data-hour'))
 		const hour = parseInt(e.target.getAttribute('data-hour')) - 1;
+		document.querySelector(`#toggle-${hour}`).click();
 		enterScore(formData[hour], hour, history)
 
 	}
+
 
 const loopForm = () =>{
 const hours = 8;
@@ -71,11 +90,12 @@ let content = []
 	content.push(
 	<>	
 		
-  <Accordion defaultActiveKey="0">
+  <Accordion >
   <Card>
     <Card.Header>
-      <Accordion.Toggle as={Button} variant="link" eventKey="0">
-        Click me!
+      <Accordion.Toggle as={Card.Header} variant="link" eventKey="0" id={`toggle-${i}`}>
+       Hour {i+1} 
+       { profile.reps[i].hasSubmitted && <CheckCircleIcon style={{float: 'right'}} /> }
       </Accordion.Toggle>
     </Card.Header>
     <Accordion.Collapse eventKey="0">
@@ -95,6 +115,7 @@ let content = []
     </Accordion.Collapse>
   </Card>
   </Accordion>
+  <br />
   </>
   )
 
@@ -114,6 +135,31 @@ console.log({profile})
 	<Row>
 		<p>blahh</p>
 	</Row>
+	<Accordion >
+  <Card>
+    <Card.Header >
+      <Accordion.Toggle as={Card.Header} variant="link" eventKey="0" id={`toggle-miles`}>
+       { profile.miles.hasSubmitted ? <>
+       	<p>Total Mileage: {profile.miles.total} miles</p>
+       	<CheckCircleIcon style={{float: 'right'}} /> 
+       	</> : <p>Enter Mileage</p>}
+      </Accordion.Toggle>
+    </Card.Header>
+    <Accordion.Collapse eventKey="0">
+      <Card.Body><Form key={0} data-hour={0} onSubmit={e => onMileageSubmit(e)}>
+  <Form.Group controlId="formBasicMiles">
+    <Form.Label>Total Miles</Form.Label>
+    <Form.Control key={`miles`} onChange={e => onMileChange(e)}  value={mileageData?.total} name="total" type="number" placeholder="Enter Total Miles" />
+  </Form.Group>
+  
+  <Button variant="primary" type="submit">
+    Submit Mileage 
+  </Button>
+  </Form></Card.Body>
+    </Accordion.Collapse>
+  </Card>
+  </Accordion>
+  <br />
 	</>
 
 {loopForm()}

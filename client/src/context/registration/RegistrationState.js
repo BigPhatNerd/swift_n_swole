@@ -58,11 +58,42 @@ const enterScore = async (formData, hour, history) => {
    
     const res = await axios.put(`/api/profile/add-score/${hour}`, formData, config);
     console.log("res.data: ", res.data);
+    console.log({formData})
     dispatch({
     	type: UPDATE_PROFILE,
     	payload: res.data
     })
     setAlert('Reps Added Successfully', 'success');
+	} catch(err) {
+		const errors = err.response.data.errors;
+		if(errors) {
+			errors.forEach(error => setAlert(error.msg, 'danger'))
+		}
+		console.error({err});
+	dispatch({
+		type: PROFILE_ERROR,
+		payload: { msg: err.response.statusText, status: err.response.status }
+	})
+	}
+}
+
+//Enter mileage
+const enterMiles = async (miles, history) => {
+	try {
+			const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+   
+    const res = await axios.put(`/api/profile/add-miles`, miles, config);
+    console.log("res.data: ", res.data);
+ 
+    dispatch({
+    	type: UPDATE_PROFILE,
+    	payload: res.data
+    })
+    setAlert('Miles Added Successfully', 'success');
 	} catch(err) {
 		const errors = err.response.data.errors;
 		if(errors) {
@@ -252,7 +283,7 @@ try {
 		dispatch({ type: CLEAR_PROFILE })
 	}
 
-	//Set alert(likely not used)
+	
 	const setAlert = (msg, type) => {
 		const id = uuid()
 	
@@ -357,7 +388,8 @@ try {
 				loadUser,
 				addTeamMembers,
 				deleteTeamMember,
-				enterScore
+				enterScore,
+				enterMiles
 			}}
 		>
 			{props.children}
