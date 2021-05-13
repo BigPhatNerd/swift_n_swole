@@ -1,5 +1,6 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/js/src/collapse.js";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 import MyNavbar from './components/MyNavbar'
@@ -12,6 +13,7 @@ import RegistrationState from './context/registration/RegistrationState'
 function App() {
 
 	return (
+		
 		<RegistrationState>
 			<Router>
 				<MyNavbar />
@@ -24,6 +26,7 @@ function App() {
 				</Switch>
 			</Router>
 		</RegistrationState>
+	
 	)
 }
 

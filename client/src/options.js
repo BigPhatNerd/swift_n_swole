@@ -39,7 +39,7 @@ name: "Team",
 	descr: "Team option in person",
 	venue: "virtual",
 	price: 300,
-	id: 104	
+	id: 105	
 },
 
 ];

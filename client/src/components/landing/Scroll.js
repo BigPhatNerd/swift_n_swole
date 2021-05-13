@@ -5,7 +5,7 @@ import axios from 'axios'
 const GetStuff = ({results, message}) => {
 	
 	return results ? (
-		<p>{message.join(' ')} +</p>
+		<p style={{whiteSpace: 'nowrap'}}>{message.join(' ')} </p>
 	) : (
 		<p style={{ visibility: 'hidden' }}>Placeholder</p>
 	)
@@ -14,7 +14,7 @@ const GetStuff = ({results, message}) => {
 const Scroll = ({results, message}) => {
 	return (
 		
-		<Ticker offset="run-in" speed={7} move={true}>
+		<Ticker offset="run-in" speed={6} move={true} mode='smooth'>
 			{() => <GetStuff results={results} message={message} />}
 		</Ticker>
 	)
