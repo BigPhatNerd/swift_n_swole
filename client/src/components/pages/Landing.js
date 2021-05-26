@@ -69,23 +69,23 @@ const [results, setResults] = useState([]);
 				resArr100.push(result)
 				place100++;
 			} else if(result.eventId === 101){
-				arr101.push(`${place101}. ${result.teamName} has ${result.miles.total} total miles`);
+				arr101.push(`${place101}. ${result.teamName} has ${result.miles.total} total miles\xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
 				resArr101.push(result);
 				place101++
 			} else if(result.eventId === 102){
-				arr102.push(`${place102}. ${result.teamName} has ${result.miles.total} total miles`);
+				arr102.push(`${place102}. ${result.teamName} has ${result.miles.total} total miles\xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
 				resArr102.push(result);
 				place102++;
 			} else if(result.eventId === 103){
-				arr103.push(`${place103}. ${result.teamName} has ${result.miles.total} total miles`);
+				arr103.push(`${place103}. ${result.teamName} has ${result.miles.total} total miles\xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
 				resArr103.push(result);
 				place103++;
 			} else if(result.eventId === 104){
-				arr104.push(`${place104}. ${result.teamName} has ${result.miles.total} total miles`);
+				arr104.push(`${place104}. ${result.teamName} has ${result.miles.total} total miles\xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
 				resArr104.push(result);
 				place104++;
 			} else if(result.eventId === 105){
-				arr105.push(`${place105}. ${result.teamName} has ${result.miles.total} total miles`);
+				arr105.push(`${place105}. ${result.teamName} has ${result.miles.total} total miles\xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
 				resArr105.push(result);
 				place105++;
 			}
@@ -146,43 +146,44 @@ return(
     </Card.Header>
     <Accordion.Collapse eventKey="0">
       <Card.Body>
-      	<p onClick={()=> setOption100(!option100)}>👉 Individual option in person 👈</p>
+      	<p onClick={()=> setOption100(!option100)} style={{letterSpacing: '1px'}}>{option100 ? "👇 Individuals 👇" : "👉 Individuals 👈"}</p>
 	{ option100 && <>	
 		<Scroll results={results} message={message100} /> 	
 		<StandingsMaterialUI results={result100}/>
 	
 		</>
 	}
-	<p onClick={()=> setOption101(!option101)}>👉 Partner option in person 👈</p>
+	<p onClick={()=> setOption101(!option101)} style={{letterSpacing: '2px'}}>{option101 ? "👇 Partners 👇" : "👉 Partners 👈"}</p>
 	{ option101 && <> 
 		<Scroll results={results} message={message101} />
 		
 		<StandingsMaterialUI results={result101}/>
 	</>}
-	<p onClick={()=> setOption102(!option102)}>👉 Individual option virtual 👈</p>
-	{ option102 && <> 
-		<Scroll results={results} message={message102} />
-		
-		<StandingsMaterialUI results={result102}/>
-	</>}
-	<p onClick={()=> setOption103(!option103)}>👉 Partner option virtual 👈</p>
-	{ option103 && <> 
-		<Scroll results={results} message={message103} />
-		
-		<StandingsMaterialUI results={result103}/>
-	</>}
-	<p onClick={()=> setOption104(!option104)}>👉    Team option virtual      👈</p>
-	{ option104 && <> 
-		<Scroll results={results} message={message104} />
-		
-		<StandingsMaterialUI results={result104}/>
-	</>}
-	<p onClick={()=> setOption105(!option105)}>👉Team option in person👈</p>
+	<p onClick={()=> setOption105(!option105)} style={{letterSpacing: '4px'}}>{option105 ? "👇 Teams 👇" : "👉  Teams  👈"}</p>
 	{ option105 && <> 
 		<Scroll results={results} message={message105} />
 		
 		<StandingsMaterialUI results={result105}/>
 	</>}
+	<p onClick={()=> setOption102(!option102)} style={{letterSpacing: '1px'}}>{option102 ? "👇 Individual (virtual) 👇" : "👉 Individual (virtual) 👈"}</p>
+	{ option102 && <> 
+		<Scroll results={results} message={message102} />
+		
+		<StandingsMaterialUI results={result102}/>
+	</>}
+	<p onClick={()=> setOption103(!option103)} style={{letterSpacing: '2px'}}>{option103 ? "👇 Partner (virtual) 👇" : "👉 Partner (virtual) 👈"}</p>
+	{ option103 && <> 
+		<Scroll results={results} message={message103} />
+		
+		<StandingsMaterialUI results={result103}/>
+	</>}
+	<p onClick={()=> setOption104(!option104)} style={{letterSpacing: '3px'}}>{option104 ? "👇 Team (virtual) 👇" : "👉 Team (virtual) 👈"}</p>
+	{ option104 && <> 
+		<Scroll results={results} message={message104} />
+		
+		<StandingsMaterialUI results={result104}/>
+	</>}
+	
       </Card.Body>
     </Accordion.Collapse>
   </Card>
