@@ -22,7 +22,7 @@ MongoClient.connect(url, function(err, client) {
 
   let users = [];
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 1000; i++) {
   	const firstName = faker.name.firstName();
   	const lastName = faker.name.lastName();
   	const eventId = faker.datatype.number({

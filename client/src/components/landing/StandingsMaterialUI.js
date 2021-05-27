@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+ import uuid from 'uuid/v4';
 import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles'
 import {
   Paper,
@@ -175,7 +175,7 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.team.map((person, index) => (
-                    <StyledTableRow key={index}>
+                    <StyledTableRow key={uuid()}>
                       <StyledTableCell
                         align="center"
                         component="th"
@@ -204,30 +204,36 @@ function Row(props) {
 export default function StandingsMaterialUI({ results }) {
   const classes = useStyles()
   //getting rows and searched for material ui
-  
+
   const [rows, setRows] = useState(results)
-  const [searched, setSearched] = useState('');
-  const [searching, setSearching] = useState(false);
-  console.log({ rows })
+  const [searched, setSearched] = useState('')
+  const [searching, setSearching] = useState(false)
+ 
 
   const [allOpen, setAllOpen] = useState(false)
 
   //Search filter
   const requestSearch = searchedVal => {
-    const filteredRows = results.filter(row => {
-      console.log("In filtered rows");
-      console.log(row)
-      setSearching(true);
-      return row.teamName.toLowerCase().includes(searchedVal.toLowerCase())
-      
+    const searchArr = [];
+    const filteredRows = results.map(row => {
+      setSearching(true)
+      row.team.map(member => {
+        if (
+          member.participantName
+            .toLowerCase()
+            .includes(searchedVal.toLowerCase())
+        ) {
+          searchArr.push(row)
+        }
+      })
     })
-    console.log({filteredRows})
-    setRows(filteredRows)
+    setRows(searchArr)
   }
   //Cancel search
   const cancelSearch = () => {
     setSearched('')
     requestSearch(searched)
+     setSearching(false)
   }
   const handleOpen = () => {
     setAllOpen(!allOpen)
@@ -289,43 +295,45 @@ export default function StandingsMaterialUI({ results }) {
               </StyledTableCell>
             </StyledTableRow>
           </TableHead>
-        { searching  ? <TableBody>
-            {
-               
-            rows.map((row, index) => (
-              <Row
-                key={row.teamName}
-                row={row}
-                index={index}
-                allOpen={allOpen}
-              />
-            ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody> :<TableBody>
-            {(rowsPerPage > 0
-              ? results.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : rows
-            ).map((row, index) => (
-              <Row
-                key={row.teamName}
-                row={row}
-                index={index}
-                allOpen={allOpen}
-              />
-            ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>}
+          {searching ? (
+            <TableBody>
+              {rows.map((row, index) => (
+                <Row
+                  key={uuid()}
+                  row={row}
+                  index={index}
+                  allOpen={allOpen}
+                />
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          ) : (
+            <TableBody>
+              {(rowsPerPage > 0
+                ? results.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : rows
+              ).map((row, index) => (
+                <Row
+                  key={uuid()}
+                  row={row}
+                  index={index}
+                  allOpen={allOpen}
+                />
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          )}
           <TableFooter>
             <TableRow>
               <TablePagination
