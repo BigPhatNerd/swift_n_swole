@@ -13,6 +13,7 @@ import background from '../../img/darkened_weights.jpg';
 
 
 
+
 const Landing = () => {
 	const registrationContext = useContext(RegistrationContext);
 	console.log("Landing");
@@ -62,7 +63,8 @@ const [results, setResults] = useState([]);
 			var place102 = 1;
 			var place103 = 1;
 			var place104 = 1;
-			var place105 = 1
+			var place105 = 1;
+			
 			allScores.data.map((result, index) => {
 				if(result.eventId === 100){
 				arr100.push(`${place100}. ${result.teamName} has ${result.miles.total} total miles \xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
@@ -146,6 +148,7 @@ return(
     </Card.Header>
     <Accordion.Collapse eventKey="0">
       <Card.Body>
+     
       	<p onClick={()=> setOption100(!option100)} style={{letterSpacing: '1px'}}>{option100 ? "👇 Individuals 👇" : "👉 Individuals 👈"}</p>
 	{ option100 && <>	
 		<Scroll results={results} message={message100} /> 	

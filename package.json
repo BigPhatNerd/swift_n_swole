@@ -27,6 +27,7 @@
     "gravatar": "^1.8.1",
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
+    "material-ui-search-bar": "^1.0.0",
     "mongoose": "^5.12.3",
     "popper.js": "^1.16.1",
     "react-stripe-elements": "^6.1.2",
