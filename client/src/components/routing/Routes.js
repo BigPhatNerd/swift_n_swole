@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Redirect,Switch } from 'react-router-dom';
 import RegisterOrSignup from '../pages/RegisterOrSignup'
 import UserRegistration from '../pages/auth/UserRegistration'
 import NotFound from '../pages/NotFound'
 import Login from '../pages/auth/Login'
 import Alert from '../Alert';
+
 
 import Checkout from '../pages/Checkout';
 import Dashboard from '../pages/Dashboard';

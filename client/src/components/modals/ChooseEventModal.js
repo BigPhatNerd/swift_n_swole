@@ -28,7 +28,7 @@ const ChooseEventModal = () =>{
 
 		<>
 
-		<Button className="mr-2" variant="contained" style={{backgroundColor: "#8C0000", color:"white"}} onClick={handleShow}>
+		<Button className="ml-2" variant="contained" style={{backgroundColor: "#8C0000", color:"white"}} onClick={handleShow}>
  Register
 </Button>
 <Modal show={show} onHide={handleClose}>

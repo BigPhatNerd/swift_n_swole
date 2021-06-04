@@ -55,7 +55,7 @@ const [results, setResults] = useState([]);
 				},
 			}
 			const allScores = await axios.get('/api/profile/all', config)
-			console.log('allScores.data: ', allScores.data)
+		
 			setResults(allScores.data)
 			var arr100 = [], arr101=[], arr102=[], arr103=[], arr104=[], arr105=[], resArr100=[], resArr101 =[], resArr102=[], resArr103=[], resArr104=[], resArr105=[];
 			var place100 = 1;
@@ -92,12 +92,13 @@ const [results, setResults] = useState([]);
 				place105++;
 			}
 			})
-			setMessage100(arr100);
-			setMessage101(arr101);
-			setMessage102(arr102);
-			setMessage103(arr103);
-			setMessage104(arr104);
-			setMessage105(arr105);
+			//Slicing to only get the top 20 users
+			setMessage100(arr100.slice(0,20));
+			setMessage101(arr101.slice(0,20));
+			setMessage102(arr102.slice(0,20));
+			setMessage103(arr103.slice(0,20));
+			setMessage104(arr104.slice(0,20));
+			setMessage105(arr105.slice(0,20));
 
 			setResult100(resArr100);
 			setResult101(resArr101);
@@ -129,14 +130,23 @@ return(
 	
 	<Row className="justify-content-center m-2">
 	<h1>2021 Swift & Swole</h1>
-	{!user.paid && user.isAuthenticated && <h2> You have not completed the payment portion of registration. </h2>}
+	
 	</Row>
-	<Row className="justify-content-center m-2">
-<Link to='/login' className="btn btn-primary">Login</Link>
+	{!user.paid && user.isAuthenticated && 
+		<Row className="justify-content-center m-2">
+		<h2> You have not completed the payment portion of registration. </h2>
+		</Row>}
+		
+		{user.isAuthenticated && user.paid ? <Link to='/dashboard' className="btn btn-primary mb-3">Dashboard</Link> : !user.paid && user.isAuthenticated ? <Row className="justify-content-center m-2">
+
+<ChooseEventModal/>
+</Row> : <Row className="justify-content-center m-2">
+<Link to='/login' className="btn btn-primary mr-2">Login</Link>
  
 
 <ChooseEventModal/>
-</Row>
+</Row>}
+	
 <br />
 <Accordion >
   <Card>

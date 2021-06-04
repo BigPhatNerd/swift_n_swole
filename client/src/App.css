@@ -63,3 +63,13 @@ body {
 .card {
     background-color: none;
 }
+#card-details, #expiration, #cvc {
+    background-color:  white;
+    width:  200px;
+    height:  20px;
+    
+  
+}
+
+
+

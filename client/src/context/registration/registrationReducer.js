@@ -38,7 +38,15 @@ const RegistrationReducer = (state, action) => {
 		return {
 			...state,
 			profile: null,
-			loading: false
+			loading: false,
+			user: {
+			isAuthenticated: false,
+			email: '',
+			name: '',
+			eventId: '',
+			paid: false
+
+		}
 		}
 		case SET_SELECTED_PRODUCT:
 		return {

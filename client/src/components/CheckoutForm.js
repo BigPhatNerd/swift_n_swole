@@ -1,5 +1,7 @@
-import React, { useState, useContext } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { Container, Row, Button  } from 'react-bootstrap';
+
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -53,37 +55,59 @@ const price = selectedProduct.price * 100;
       <div className="success">
         <h2>Payment Successful!</h2>
         <a href={receiptUrl}>View Receipt</a>
+        <br />
         <Link to="/">Home</Link>
       </div>
     )
   }
 
   return (
-    <div className="checkout-form">
-    <p>Type: {selectedProduct.name}</p>
-    <p>Description: {selectedProduct.descr}</p>
-    <p>Venue: {selectedProduct.venue}</p>
-      <p>Amount: ${selectedProduct.price}</p>
-      <p>Email: {email} </p>
+   <Container className='pt-4'>
+    <Row className="justify-content-center m-2">
+    <h3>Type: {selectedProduct.name}</h3>
+    </Row>
+    <Row className="justify-content-center m-2">
+    <h3>Description: {selectedProduct.descr}</h3>
+    </Row>
+    <Row className="justify-content-center m-2">
+    <h3>Venue: {selectedProduct.venue}</h3>
+    </Row>
+      <Row className="justify-content-center m-2">
+      <h3>Amount: ${selectedProduct.price}</h3>
+      </Row>
+      <Row className="justify-content-center m-2">
+      <h3>Email: {email} </h3>
+      </Row>
       <form onSubmit={handleSubmit}>
         <label>
+        <Row className="justify-content-center m-2">
           Card details
+          </Row>
+          <div id='card-details'>
           <CardNumberElement />
+          </div>
         </label>
-
+<br />
         <label>
           Expiration date
+          <div id='expiration'>
           <CardExpiryElement />
+          </div>
         </label>
+        <br />
         <label>
           CVC
+          <div id='cvc'>
           <CardCVCElement />
+          </div>
         </label>
-        <button type="submit" className="order-button">
+        <br />
+        <Button  type="submit" className="order-button btn btn-primary" size="lg">
+        
           Pay
-        </button>
+        </Button>
       </form>
-    </div>
+    </Container>
   )
 }
 

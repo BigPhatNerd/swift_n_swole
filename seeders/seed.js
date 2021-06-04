@@ -19,10 +19,17 @@ MongoClient.connect(url, function(err, client) {
 
   const usersCollection = db.collection('users');
   const profilesCollection = db.collection('profiles');
+  usersCollection.drop(function(err) {
+  	console.log("dropped Users Collection");
+  });
+  profilesCollection.drop(function(err) {
+  	console.log("dropped Profiles collection")
+  })
+
 
   let users = [];
 
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 100; i++) {
   	const firstName = faker.name.firstName();
   	const lastName = faker.name.lastName();
   	const eventId = faker.datatype.number({
@@ -39,12 +46,12 @@ MongoClient.connect(url, function(err, client) {
   		paid: true
   	};
   	users.push(newUser);
-  	console.log({newUser})
+  	
   };
   usersCollection.insertMany(users);
 
   let profiles = [];
-  for (let i = 0; i < 50; i++){
+  for (let i = 0; i < 200; i++){
 const firstName = faker.name.firstName();
   	const lastName = faker.name.lastName();
   	const miles = faker.datatype.number({
@@ -107,7 +114,7 @@ var arr = []
 
   	}
   	profiles.push(newProfile)
-  	console.log({newProfile})
+  	
   	
   }
   profilesCollection.insertMany(profiles);

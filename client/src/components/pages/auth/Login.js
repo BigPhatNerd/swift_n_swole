@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import RegistrationContext from '../../../context/registration/registrationContext';
 import { Container, Col,  Row, Button, Form } from 'react-bootstrap';
-
+import background from '../../../img/girl_pushpress.jpg';
 
 const Login = () => {
 	const registrationContext = useContext(RegistrationContext);
@@ -11,6 +11,17 @@ const Login = () => {
   email: '',  
   password: '',
 })
+  const styles = {
+    container: {
+        backgroundImage: `url(${background})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        width: '100vw',
+        height: '100vh'
+    },
+   
+};
 const { email, password, } = formData;
 const onChange = e =>{
   setFormData({...formData, [e.target.name]: e.target.value })
@@ -32,13 +43,12 @@ const onSubmit = e =>{
   }
 
 	return(
-		<Container>
-			<Row>
-				Sign In
+    <div  style={styles.container}>
+		<Container className='pt-3'>
+			<Row className="justify-content-center m-2">
+				<h1>Sign In </h1>
 			</Row>
-			<Row>
-				Sign in to your account (use material ui icon)
-			</Row>
+		
 			<Form onSubmit={e => onSubmit(e)}>
   <Form.Group controlId="formBasicFirstName">
     <Form.Label>Email</Form.Label>
@@ -52,10 +62,11 @@ const onSubmit = e =>{
     Submit
   </Button>
 </Form>
-<Row>
-	<p>Don't have an account? <Link to='/'>Register from homepage</Link></p>
+<Row className="ml-2 mt-2">
+	<p>Don't have an account?&nbsp; <Link to='/'>Register from homepage</Link></p>
 </Row>
-		</Container>)
+		</Container>
+    </div>)
 }
 
 export default Login;

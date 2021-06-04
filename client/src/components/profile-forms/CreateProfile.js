@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Row, Button, Form } from 'react-bootstrap';
+import background from '../../img/dude_running.jpg';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
@@ -34,15 +35,27 @@ const CreateProfile = ({history}) => {
 	useEffect(() => {
 		getCurrentProfile()
 	}, [profile])
+	const styles = {
+    container: {
+        backgroundImage: `url(${background})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        width: '100vw',
+        height: '100vh'
+    },
+   
+};
 console.log({profile})
 	return loading && profile === null ? (
 <Redirect to='/dashboard' />
 		) : (
-<Container>
-	<Row>
+		<div style={styles.container}>
+<Container className='pt-3'>
+	<Row className="justify-content-center m-2">
 		<h1>Create Your Profile</h1>
 	</Row>
-	<Row>
+	<Row className="justify-content-center m-2">
 		<p>Let's get some information to assemble your team</p>
 	</Row>
 	<Form onSubmit={e => onSubmit(e)}>
@@ -50,11 +63,8 @@ console.log({profile})
     <Form.Label>Team Name</Form.Label>
     <Form.Control onChange={e => onChange(e)}  value={teamName} name="teamName" type="teamName" placeholder="Enter Team's Name" />
   </Form.Group>
-   <Form.Group controlId="formBasicTeamName">
-    <Form.Label>Upload Team Image</Form.Label>
-    
-  </Form.Group>
-  <Button variant="primary" type="submit">
+ 
+  <Button className="m-2"variant="primary" type="submit">
     Submit
   </Button>
   </Form>
@@ -62,6 +72,7 @@ console.log({profile})
          Go Back
         </Link>
 </Container>
+</div>
 		)
 		
 }

@@ -279,8 +279,11 @@ try {
 	//logout user
 
 	const logout = () => {
+		console.log("Logout being hit!!")
+
 		dispatch({ type: LOGOUT })
 		dispatch({ type: CLEAR_PROFILE })
+			window.location.reload(false);
 	}
 
 	
