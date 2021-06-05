@@ -1,58 +1,66 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Row, Button, Form } from 'react-bootstrap';
+import background from '../../img/gym_pic.jpg';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
-const EditTeamName = ({history}) => {
-	const registrationContext = useContext(RegistrationContext)
-	console.log("CreateProfile");
-	console.log({registrationContext});
+const EditTeamName = ({ history }) => {
+    const registrationContext = useContext(RegistrationContext)
+    console.log("CreateProfile");
+    console.log({ registrationContext });
 
-	const {
-		createProfile,
-		getCurrentProfile,
-		profile,
-		loading,
-	} = registrationContext
-	//Later add a place for team photo
-	const [formData, setFormData] = useState({
-		teamName: '',
-	})
-	useEffect(() => {
-		getCurrentProfile()
-		setFormData({ teamName: loading || !profile.teamName ? '' : profile.teamName})
-	}, [loading])
-	const { teamName } = formData
-	const onChange = e => {
-		setFormData({ ...formData, [e.target.name]: e.target.value })
-	}
-	const onSubmit = e => {
-		e.preventDefault()
-		createProfile(formData, history, true)
-	}
+    const {
+        createProfile,
+        getCurrentProfile,
+        profile,
+        loading,
+    } = registrationContext
+    //Later add a place for team photo
+    const [formData, setFormData] = useState({
+        teamName: '',
+    })
+    useEffect(() => {
+        getCurrentProfile()
+        setFormData({ teamName: loading || !profile.teamName ? '' : profile.teamName })
+    }, [loading])
+    const styles = {
+        container: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '100vw',
+            height: '100vh'
+        },
 
-	
-console.log({profile})
-	return loading && profile === null ? (
-<Redirect to='/dashboard' />
-		) : (
+    };
+    const { teamName } = formData
+    const onChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const onSubmit = e => {
+        e.preventDefault()
+        createProfile(formData, history, true)
+    }
+
+
+    console.log({ profile })
+    return loading && profile === null ? (
+        <Redirect to='/dashboard' />
+    ) : (
+        <div id='cover' style={styles.container}>
 <Container>
-	<Row>
-		<h1>Create Your Profile</h1>
+	<Row className="justify-content-center mt-4 mb-2">
+		<h1>Edit Your Team Name</h1>
 	</Row>
-	<Row>
-		<p>Let's get some information to assemble your team</p>
-	</Row>
+
 	<Form onSubmit={e => onSubmit(e)}>
   <Form.Group controlId="formBasicTeamName">
     <Form.Label>Team Name</Form.Label>
     <Form.Control onChange={e => onChange(e)}  value={teamName} name="teamName" type="teamName" placeholder="Enter Team's Name" />
   </Form.Group>
-   <Form.Group controlId="formBasicTeamName">
-    <Form.Label>Upload Team Image</Form.Label>
-    
-  </Form.Group>
+  
   <Button variant="primary" type="submit">
     Submit
   </Button>
@@ -61,8 +69,9 @@ console.log({profile})
          Go Back
         </Link>
 </Container>
-		)
-		
+</div>
+    )
+
 }
 
 export default EditTeamName

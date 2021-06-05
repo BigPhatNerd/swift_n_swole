@@ -1,11 +1,22 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Container, Col,  Button, Form } from 'react-bootstrap';
+import { Container, Col,  Button, Form, Row } from 'react-bootstrap';
+import background from '../../../img/plates.jpg';
 
 import RegistrationContext from '../../../context/registration/registrationContext';
 const UserRegistration = () =>{
 
+    const styles = {
+        container: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '100vw',
+            height: '100vh'
+        },
 
+    };
 const registrationContext = useContext(RegistrationContext);
 const { product, user, setProduct, register, setAlert, setEmail, setName } = registrationContext;
 
@@ -42,7 +53,12 @@ console.log({registrationContext});
 if (user.isAuthenticated) return (
   <Redirect to="/checkout" />)
 	return(
+     <div id='cover' style={styles.container}>
     <Container>
+<Row className="justify-content-center m-2">
+  <h1>User Registration</h1>
+  
+  </Row>
   <Col>
 		<Form onSubmit={e => onSubmit(e)}>
   <Form.Group controlId="formBasicFirstName">
@@ -76,6 +92,7 @@ if (user.isAuthenticated) return (
 </Form>
 </Col>
 </Container>
+</div>
 		)
 }
 

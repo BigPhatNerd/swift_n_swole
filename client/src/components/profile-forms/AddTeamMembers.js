@@ -1,65 +1,78 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Row, Button, Form } from 'react-bootstrap';
+import background from '../../img/amanda_snatch.jpg';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
-const AddTeamMembers = ({history}) => {
-	const registrationContext = useContext(RegistrationContext)
-	console.log("AddTeamMemberse");
-	console.log({registrationContext});
+const AddTeamMembers = ({ history }) => {
+    const registrationContext = useContext(RegistrationContext)
+    console.log("AddTeamMemberse");
+    console.log({ registrationContext });
 
-	const {
-		createProfile,
-		getCurrentProfile,
-		profile,
-		loading,
-		addTeamMembers
-	} = registrationContext
-	//Later add a place for team photo
-	const [formData, setFormData] = useState({
-		participantName: '',
-		participantGender: '',
-		participantCellPhone: '',
-		participantAddress: '',
-		participantCity: '',
-		participantState: '',
-		participantZip: '',
-		participantEmail: '',
-		participantDOB: '',
+    const {
+        createProfile,
+        getCurrentProfile,
+        profile,
+        loading,
+        addTeamMembers
+    } = registrationContext
+    //Later add a place for team photo
+    const [formData, setFormData] = useState({
+        participantName: '',
+        participantGender: '',
+        participantCellPhone: '',
+        participantAddress: '',
+        participantCity: '',
+        participantState: '',
+        participantZip: '',
+        participantEmail: '',
+        participantDOB: '',
 
-	})
-	const { 
-		participantName,
-participantGender,
-participantCellPhone,
-participantAddress,
-participantCity,
-participantState,
-participantZip,
-participantEmail,
-participantDOB 
-} = formData
-	const onChange = e => {
-		setFormData({ ...formData, [e.target.name]: e.target.value })
-	}
-	const onSubmit = e => {
-		e.preventDefault()
-		addTeamMembers(formData, history)
-	}
+    })
+    const {
+        participantName,
+        participantGender,
+        participantCellPhone,
+        participantAddress,
+        participantCity,
+        participantState,
+        participantZip,
+        participantEmail,
+        participantDOB
+    } = formData
+    const onChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const onSubmit = e => {
+        e.preventDefault()
+        addTeamMembers(formData, history)
+    }
 
-	useEffect(() => {
-		getCurrentProfile()
-	}, [])
-console.log({profile})
-	return loading && profile === null ? (
-<Redirect to='/dashboard' />
-		) : (
-<Container>
-	<Row>
+    useEffect(() => {
+        getCurrentProfile()
+    }, [])
+    const styles = {
+        container: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '100vw',
+            height: '100vh'
+        },
+
+    };
+    console.log({ profile })
+    return loading && profile === null ? (
+        <Redirect to='/dashboard' />
+    ) : (
+        <div id='team-members' style={styles.container}>
+<Container className='pt-3'>
+	<Row className="justify-content-center m-2">
 		<h1>Add Team Members</h1>
 	</Row>
-	<Row>
+	<Row className="justify-content-center m-2">
 		<p>Let's get some information to assemble your team</p>
 	</Row>
 	<Form onSubmit={e => onSubmit(e)}>
@@ -109,8 +122,9 @@ console.log({profile})
          Go Back
         </Link>
 </Container>
-		)
-		
+</div>
+    )
+
 }
 
 export default AddTeamMembers

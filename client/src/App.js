@@ -12,9 +12,9 @@ import RegistrationState from './context/registration/RegistrationState'
 
 function App() {
 
-	return (
-		
-		<RegistrationState>
+    return (
+
+        <RegistrationState>
 			<Router>
 				<MyNavbar />
 				
@@ -26,8 +26,8 @@ function App() {
 				</Switch>
 			</Router>
 		</RegistrationState>
-	
-	)
+
+    )
 }
 
 export default App

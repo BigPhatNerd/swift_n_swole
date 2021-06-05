@@ -132,7 +132,8 @@ function TablePaginationActions(props) {
 //end initial pagination
 
 function Row(props) {
-  const { row, index, allOpen } = props
+  const { row, index, allOpen } = props;
+ 
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
@@ -149,10 +150,10 @@ function Row(props) {
           </IconButton>
         </StyledTableCell>
         <StyledTableCell align="center" component="th" scope="row">
-          {index + 1}
+          {row.rank}
         </StyledTableCell>
         <StyledTableCell align="center">{row.teamName}</StyledTableCell>
-        <StyledTableCell align="center">{0}</StyledTableCell>
+        <StyledTableCell align="center">{row.totalScore}</StyledTableCell>
         <StyledTableCell align="center">{row.miles.total}</StyledTableCell>
       </StyledTableRow>
       <StyledTableRow>
@@ -203,13 +204,14 @@ function Row(props) {
 
 export default function StandingsMaterialUI({ results }) {
   const classes = useStyles()
+  results.map((result,index) => result["rank"] = index + 1)
   //getting rows and searched for material ui
 
   const [rows, setRows] = useState(results)
   const [searched, setSearched] = useState('')
   const [searching, setSearching] = useState(false)
  
-
+console.log({results})
   const [allOpen, setAllOpen] = useState(false)
 
   //Search filter
@@ -303,6 +305,7 @@ export default function StandingsMaterialUI({ results }) {
                   row={row}
                   index={index}
                   allOpen={allOpen}
+                  results={results}
                 />
               ))}
               {emptyRows > 0 && (
@@ -325,6 +328,7 @@ export default function StandingsMaterialUI({ results }) {
                   row={row}
                   index={index}
                   allOpen={allOpen}
+                  results={results}
                 />
               ))}
               {emptyRows > 0 && (
@@ -336,6 +340,7 @@ export default function StandingsMaterialUI({ results }) {
           )}
           <TableFooter>
             <TableRow>
+            { !searching &&
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
@@ -350,6 +355,7 @@ export default function StandingsMaterialUI({ results }) {
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 ActionsComponent={TablePaginationActions}
               ></TablePagination>
+            }
             </TableRow>
           </TableFooter>
         </Table>

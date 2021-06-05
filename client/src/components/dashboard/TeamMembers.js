@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
-import { Table, Row, Button } from  'react-bootstrap';
+import { Table, Row, Button } from 'react-bootstrap';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
 const TeamMembers = () => {
-const registrationContext = useContext(RegistrationContext);
-const { getCurrentProfile, profile, loading, user, deleteTeamMember } = registrationContext;
-const teamMembers = profile.team.map(({_id, participantName, participantEmail, participantGender, participantCity, participantState}, index) =>(
 
-	 <tr key={_id}>
-	 <td>{index + 1}</td>
+    const registrationContext = useContext(RegistrationContext);
+    const { getCurrentProfile, profile, loading, user, deleteTeamMember } = registrationContext;
+    const teamMembers = profile.team.map(({ _id, participantName, participantEmail, participantGender, participantCity, participantState }, index) => (
+
+        <tr className="align-content-center" key={_id}>
+   <td>{index + 1}</td>
       <td>{participantName}</td>
       <td>{participantEmail}</td>
       <td>{participantGender}</td>
@@ -19,12 +20,12 @@ const teamMembers = profile.team.map(({_id, participantName, participantEmail, p
    <Button style={{marginBottom: '.5rem', marginTop: '.2rem', backgroundColor: '#8C0000', border: 'none'}}onClick={() => deleteTeamMember(_id)}>Delete</Button>
    </td>
     </tr>
-    
 
-	))
-	return (
-		
-		<Table striped bordered size="sm" variant='dark' borderless>
+
+    ))
+    return (
+
+        <Table striped bordered size="sm" variant='dark' borderless>
   <thead>
     <tr>
       <th>#</th>
@@ -42,7 +43,7 @@ const teamMembers = profile.team.map(({_id, participantName, participantEmail, p
   </tbody>
 </Table>
 
-		)
+    )
 
 }
 

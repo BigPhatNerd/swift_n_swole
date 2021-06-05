@@ -133,7 +133,15 @@ ProfileSchema.virtual("phaseFour").get(function(){
         }
     })
     return total
+});
+ProfileSchema.virtual("totalScore").get(function(){
+    var total = 0;
+    
+  total = ((200*this.phaseOne) + (200*this.phaseTwo) + (200*this.phaseThree) + (200*this.phaseFour) + (200*this.phaseOne) + (200*this.phaseTwo) + (200*this.phaseThree) + (200*this.phaseFour) + (2000*this.miles.total))/100;
+ 
+  return total
 })
+
 
 
 const Profile = model('Profile', ProfileSchema)

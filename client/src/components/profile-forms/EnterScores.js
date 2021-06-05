@@ -4,7 +4,7 @@ import { Container, Row, Button, Form, Accordion, Card } from 'react-bootstrap';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import RegistrationContext from '../../context/registration/registrationContext';
-
+import background from '../../img/rope.jpg';
 const EnterScores = ({history}) => {
 	const registrationContext = useContext(RegistrationContext)
 	console.log("EnterScores");
@@ -44,19 +44,27 @@ const obj ={
 		setFormData(setArray());
 		setMileageData({ total: loading || !profile?.miles?.total ? '' : profile.miles.total})
 	}, [loading])
+	const styles = {
+        container: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '100vw',
+            height: '100vh'
+        },
+
+    };
 	const { benchPress, deadlift } = formData
 
 	const onChange = i => e => {
-		console.log({i});
-		console.log("e.target.name: ", e.target.name);
+		
 		
 		let newArr = [...formData];
 		newArr[i] = {...newArr[i],[e.target.name]: parseInt(e.target.value) };
-		console.log("newArr[index]: ", newArr[i]);
-		console.log("e.target.value: ", e.target.value);
+	
 		setFormData(newArr);
-		console.log({newArr})
-		console.log({formData})
+		
 	}
 
 	const onMileChange = e =>{
@@ -127,14 +135,13 @@ console.log({profile})
 	return loading && profile === null ? (
 <Redirect to='/dashboard' />
 		) : (
+		<div id='cover' style={styles.container}>
 <Container>
 <>
-	<Row>
+	<Row className="justify-content-center m-4">
 		<h1>Enter Your Scores</h1>
 	</Row>
-	<Row>
-		<p>blahh</p>
-	</Row>
+	
 	<Accordion >
   <Card>
     <Card.Header >
@@ -168,6 +175,7 @@ console.log({profile})
          Go Back
         </Link>
 </Container>
+</div>
 		)
 		
 }

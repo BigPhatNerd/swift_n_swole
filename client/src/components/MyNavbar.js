@@ -1,17 +1,18 @@
-import React, {useContext } from 'react';
+import React, { useContext } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RegistrationContext from '../context/registration/registrationContext';
 
 
-const MyNavbar = () =>{
-  const registrationContext = useContext(RegistrationContext);
-  const { logout, user } = registrationContext;
-  console.log("MyNavbar.js");
-  console.log({registrationContext})
+const MyNavbar = () => {
+    const registrationContext = useContext(RegistrationContext);
+    const { logout, user } = registrationContext;
+    console.log("MyNavbar.js");
+    console.log({ registrationContext })
 
-  return(
-<Navbar className="color-nav" expand="lg">
+    return (
+
+        <Navbar className="color-nav" expand="lg" sticky="top">
   <Navbar.Brand color='light'as={Link} to="/">Swift & Swole</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
@@ -27,7 +28,7 @@ const MyNavbar = () =>{
   
   </Navbar.Collapse>
 </Navbar>
-)
+    )
 }
 
 export default MyNavbar;

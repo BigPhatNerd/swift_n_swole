@@ -10,43 +10,43 @@ import RegistrationDescription from '../dashboard/RegistrationDescription';
 import RegistrationContext from '../../context/registration/registrationContext';
 
 const Dashboard = () => {
-	const registrationContext = useContext(RegistrationContext)
-	const {
-		getCurrentProfile,
-		profile,
-		loading,
-		user,
-		setAlert,
-	} = registrationContext
+    const registrationContext = useContext(RegistrationContext)
+    const {
+        getCurrentProfile,
+        profile,
+        loading,
+        user,
+        setAlert,
+    } = registrationContext
 
-	useEffect(() => {
-		getCurrentProfile()
-		
-	}, [])
+    useEffect(() => {
+        getCurrentProfile()
 
-	const styles = {
-    container: {
-        backgroundImage: `url(${background})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        width: '100vw',
-        height: '100vh'
-    },
-   
-};
-	console.log('In Dashboard')
-	console.log({ registrationContext })
-	return !user.paid ? (
-	!user.isAuthenticated || user.email === '' ? (
-		<Redirect to="/" />
-	) :	<Redirect to="/checkout" />
-	)   : loading && profile === null ? (
-		<Spinner />
-	) : (
-	<div id='cover' style={styles.container}>
+    }, [])
+
+    const styles = {
+     container: {
+         backgroundImage: `url(${background})`,
+         backgroundPosition: 'center',
+         backgroundSize: 'cover',
+         backgroundRepeat: 'no-repeat',
+         width: '100vw',
+         height: '100vh'
+     },
+
+ };
+    console.log('In Dashboard')
+    console.log({ registrationContext })
+    return !user.paid ? (
+        !user.isAuthenticated || user.email === '' ? (
+            <Redirect to="/" />
+        ) : <Redirect to="/checkout" />
+    ) : loading && profile === null ? (
+        <Spinner />
+    ) : (
+        <div id='cover' style={styles.container}>
 		<Container className='pt-3'>
-			{profile && profile.teamName !== '' && <h1>Team: {profile?.teamName}</h1>}
+			{profile && profile.teamName !== '' && <Row className="justify-content-center mt-5"><h1>Team: {profile?.teamName}</h1></Row>}
 <Row className="justify-content-center m-3">
 			<h3>Welcome {user?.name}</h3>
 			</Row>
@@ -72,7 +72,7 @@ const Dashboard = () => {
 			)}
 		</Container>
 		</div>
-	)
+    )
 }
 
 export default Dashboard
