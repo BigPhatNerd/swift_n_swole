@@ -11,7 +11,6 @@ const AddTeamMembers = ({ history }) => {
     console.log({ registrationContext });
 
     const {
-        createProfile,
         getCurrentProfile,
         profile,
         loading,
@@ -51,6 +50,7 @@ const AddTeamMembers = ({ history }) => {
 
     useEffect(() => {
         getCurrentProfile()
+        //eslint-disable-next-line
     }, [])
     const styles = {
         container: {

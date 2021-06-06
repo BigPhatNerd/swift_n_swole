@@ -32,9 +32,11 @@ const CreateProfile = ({history}) => {
 		createProfile(formData, history)
 	}
 
+
 	useEffect(() => {
 		getCurrentProfile()
-	}, [profile])
+		//eslint-disable-next-line
+	}, [])
 	const styles = {
     container: {
         backgroundImage: `url(${background})`,

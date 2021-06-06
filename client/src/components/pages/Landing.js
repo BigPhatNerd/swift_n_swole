@@ -1,14 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Container, Row, Accordion, Card } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import ChooseEventModal from '../modals/ChooseEventModal';
 import RegistrationContext from '../../context/registration/registrationContext';
 import Scroll from '../landing/Scroll';
 import axios from 'axios';
 
 import StandingsMaterialUI from '../landing/StandingsMaterialUI';
-import Grid from '@material-ui/core/Grid';
+
 import background from '../../img/darkened_weights.jpg';
 
 //
@@ -18,7 +17,7 @@ const Landing = () => {
     const registrationContext = useContext(RegistrationContext);
     console.log("Landing");
     console.log({ registrationContext });
-    const { loadUser, user, setAlert } = registrationContext;
+    const { loadUser, user } = registrationContext;
     //hide or show scrolling tickers
     const [option100, setOption100] = useState(false);
     const [option101, setOption101] = useState(false);
@@ -45,9 +44,11 @@ const Landing = () => {
 
     const [results, setResults] = useState([]);
 
-
+useEffect(() =>{
+    loadUser();
+    //eslint-disable-next-line
+}, [])
     useEffect(() => {
-        loadUser()
         async function getAll() {
             const config = {
                 headers: {
@@ -78,7 +79,7 @@ allScores.data.sort((a,b) => b.totalScore - a.totalScore );
             var place104 = 1;
             var place105 = 1;
 
-            allScores.data.map((result, index) => {
+            allScores.data.forEach((result, index) => {
 
                 if(result.eventId === 100) {
                     arr100.push(`${place100}. ${result.teamName} has ${result.totalScore}  points and ${result.miles.total} total miles \xa0\xa0\xa0\xa0\xa0\xa0\xa0`);
@@ -105,6 +106,7 @@ allScores.data.sort((a,b) => b.totalScore - a.totalScore );
                     resArr105.push(result);
                     place105++;
                 }
+
             })
             //Slicing to only get the top 20 users
             setMessage100(arr100.slice(0, 20));

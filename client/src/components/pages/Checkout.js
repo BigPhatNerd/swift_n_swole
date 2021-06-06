@@ -7,7 +7,7 @@ import background from '../../img/bucket.jpg';
 
 const Checkout = () => {
   const registrationContext = useContext(RegistrationContext);
-const { product, user, setProduct, register, setAlert } = registrationContext;
+const { product, user,  } = registrationContext;
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [user])

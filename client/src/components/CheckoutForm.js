@@ -10,11 +10,11 @@ import {
 } from 'react-stripe-elements'
 import axios from 'axios'
 import RegistrationContext from '../context/registration/registrationContext';
-import Spinner from './Spinner';
+
 
 const CheckoutForm = ({ selectedProduct, stripe, email }) => {
   const registrationContext = useContext(RegistrationContext);
-  const { setAlert, product, loadUser } = registrationContext;
+  const { setAlert, product, loadUser, loading } = registrationContext;
   const [receiptUrl, setReceiptUrl] = useState('');
 
 console.log('CheckoutForm.js')
@@ -102,6 +102,7 @@ const price = selectedProduct.price * 100;
           </div>
         </label>
         <br />
+      
         <Button  type="submit" className="order-button btn btn-primary" size="lg">
         
           Pay

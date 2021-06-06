@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import Ticker from 'react-ticker'
-import axios from 'axios'
+import React from 'react';
+import Ticker from 'react-ticker';
+
 
 const GetStuff = ({results, message}) => {
 	

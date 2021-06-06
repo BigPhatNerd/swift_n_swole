@@ -22,8 +22,13 @@ const EditTeamName = ({ history }) => {
     })
     useEffect(() => {
         getCurrentProfile()
-        setFormData({ teamName: loading || !profile.teamName ? '' : profile.teamName })
-    }, [loading])
+        //eslint-disable-next-line
+    }, [])
+    useEffect(() => {
+       
+        setFormData({ teamName: loading || !profile.teamName ? '' : profile.teamName });
+        //esling-disable-next-line
+    }, [loading, profile])
     const styles = {
         container: {
             backgroundImage: `url(${background})`,

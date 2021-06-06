@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { Table, Row, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
 const TeamMembers = () => {
 
     const registrationContext = useContext(RegistrationContext);
-    const { getCurrentProfile, profile, loading, user, deleteTeamMember } = registrationContext;
+    const { profile, deleteTeamMember } = registrationContext;
     const teamMembers = profile.team.map(({ _id, participantName, participantEmail, participantGender, participantCity, participantState }, index) => (
 
         <tr className="align-content-center" key={_id}>

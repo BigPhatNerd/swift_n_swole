@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import RegistrationContext from '../../../context/registration/registrationContext';
-import { Container, Col,  Row, Button, Form } from 'react-bootstrap';
+import { Container,  Row, Button, Form } from 'react-bootstrap';
 import background from '../../../img/girl_pushpress.jpg';
 
 const Login = () => {

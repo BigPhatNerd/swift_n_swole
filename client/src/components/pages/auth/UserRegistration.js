@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Container, Col,  Button, Form, Row } from 'react-bootstrap';
 import background from '../../../img/plates.jpg';
+import Spinner from '../../Spinner'
 
 import RegistrationContext from '../../../context/registration/registrationContext';
 const UserRegistration = () =>{
@@ -18,7 +19,7 @@ const UserRegistration = () =>{
 
     };
 const registrationContext = useContext(RegistrationContext);
-const { product, user, setProduct, register, setAlert, setEmail, setName } = registrationContext;
+const { user, register, setAlert, setEmail, setName, loading } = registrationContext;
 
 const [formData, setFormData] = useState({
   firstName: '',
@@ -85,7 +86,7 @@ if (user.isAuthenticated) return (
     <Form.Label>Re-enter Password</Form.Label>
     <Form.Control onChange={e => onChange(e)}  value={password2} name="password2" type="password" placeholder="Password confirmation" />
   </Form.Group>
-  
+  {loading && <Spinner/>}
   <Button variant="primary" type="submit">
     Submit
   </Button>

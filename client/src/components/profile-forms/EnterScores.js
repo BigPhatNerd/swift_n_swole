@@ -37,13 +37,17 @@ const obj ={
 
 	const [mileageData, setMileageData] = useState({ total: 0 });
 
-
+useEffect(() =>{
+	getCurrentProfile();
+	//eslint-disable-next-line
+}, [])
 
 	useEffect(() => {
-		getCurrentProfile()
+		// getCurrentProfile()
 		setFormData(setArray());
 		setMileageData({ total: loading || !profile?.miles?.total ? '' : profile.miles.total})
-	}, [loading])
+		//eslint-disable-next-line
+	}, [loading, profile])
 	const styles = {
         container: {
             backgroundImage: `url(${background})`,
@@ -55,7 +59,7 @@ const obj ={
         },
 
     };
-	const { benchPress, deadlift } = formData
+
 
 	const onChange = i => e => {
 		
@@ -78,7 +82,7 @@ console.log({mileageData})
 	}
 
 	
-	const onSubmit = (e) => {
+	const onSubmit = (e, i) => {
 		e.preventDefault()
 		// createProfile(formData, history, true)
 
@@ -93,7 +97,7 @@ console.log({mileageData})
 const loopForm = () =>{
 const hours = 8;
 let content = []
-	for( var i = 0; i < hours; i++){
+	for( let i = 0; i < hours; i++){
 		
 	content.push(
 	<>	

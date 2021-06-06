@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
  import uuid from 'uuid/v4';
 import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -15,15 +15,13 @@ import {
   Collapse,
   Box,
   Table,
-} from '@material-ui/core'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
-import RegistrationContext from '../../context/registration/registrationContext'
-import LastPageIcon from '@material-ui/icons/LastPage'
-import FirstPageIcon from '@material-ui/icons/FirstPage'
-import SearchBar from 'material-ui-search-bar'
+} from '@material-ui/core';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import LastPageIcon from '@material-ui/icons/LastPage';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import SearchBar from 'material-ui-search-bar';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -132,7 +130,7 @@ function TablePaginationActions(props) {
 //end initial pagination
 
 function Row(props) {
-  const { row, index, allOpen } = props;
+  const { row, allOpen } = props;
  
   const [open, setOpen] = useState(false)
   const classes = useStyles()
@@ -217,9 +215,9 @@ console.log({results})
   //Search filter
   const requestSearch = searchedVal => {
     const searchArr = [];
-    const filteredRows = results.map(row => {
+   results.forEach(row => {
       setSearching(true)
-      row.team.map(member => {
+      row.team.forEach(member => {
         if (
           member.participantName
             .toLowerCase()
@@ -271,7 +269,7 @@ console.log({results})
         <Table
           aria-label="collapsible table"
           className={classes.table}
-          aria-label="customized table"
+        
         >
           <TableHead>
             <StyledTableRow>

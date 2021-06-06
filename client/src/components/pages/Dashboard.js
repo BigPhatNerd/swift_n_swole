@@ -16,12 +16,11 @@ const Dashboard = () => {
         profile,
         loading,
         user,
-        setAlert,
     } = registrationContext
 
     useEffect(() => {
         getCurrentProfile()
-
+//eslint-disable-next-line
     }, [])
 
     const styles = {
