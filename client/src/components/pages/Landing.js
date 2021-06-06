@@ -11,7 +11,7 @@ import StandingsMaterialUI from '../landing/StandingsMaterialUI';
 import Grid from '@material-ui/core/Grid';
 import background from '../../img/darkened_weights.jpg';
 
-
+//
 
 
 const Landing = () => {
