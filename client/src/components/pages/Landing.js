@@ -173,7 +173,7 @@ allScores.data.sort((a,b) => b.totalScore - a.totalScore );
       </Accordion.Toggle>
     </Card.Header>
     <Accordion.Collapse eventKey="0">
-      <Card.Body>
+      <Card.Body style={{paddingLeft: 0, paddingRight: 0}}>
      
       	<p onClick={()=> setOption100(!option100)} style={{letterSpacing: '1px'}}>{option100 ? <><span  role="img" aria-label="finger-down">👇</span> Individuals <span role="img" aria-label="finger-down">👇</span></> : <><span  role="img" aria-label="finger-right">👉 </span> Individuals <span  role="img" aria-label="finger-left">👈 </span> </>}</p>
 	{ option100 && <>	

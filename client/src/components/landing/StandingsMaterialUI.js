@@ -160,7 +160,7 @@ function Row(props) {
           colSpan={6}
         >
           <Collapse in={allOpen ? !open : open} timeout="auto" unmountOnExit>
-            <Box>
+            <Box style={{paddingBottom: '1rem'}}>
               <Typography variant="h6" gutterBottom component="div">
                 Team Members
               </Typography>
