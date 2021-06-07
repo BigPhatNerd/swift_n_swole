@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Row, Button  } from 'react-bootstrap';
+import Spinner from './Spinner';
 
 import {
   CardNumberElement,
@@ -14,8 +15,12 @@ import RegistrationContext from '../context/registration/registrationContext';
 
 const CheckoutForm = ({ selectedProduct, stripe, email }) => {
   const registrationContext = useContext(RegistrationContext);
-  const { setAlert, product, loadUser, loading } = registrationContext;
+  const { setAlert, product, loadUser } = registrationContext;
   const [receiptUrl, setReceiptUrl] = useState('');
+  const [stripeLoading, setStripeLoading]  = useState(false);
+
+  const handleStripeLoading = () => setStripeLoading(true);
+  const handleStopStripeLoading = () => setStripeLoading(false)
 
 console.log('CheckoutForm.js')
 console.log({registrationContext})
@@ -27,23 +32,37 @@ console.log({registrationContext})
   
 
   const handleSubmit = async event => {
-    event.preventDefault()
 
-console.log("I was hit");
-    const { token } = await stripe.createToken({
+   try {
+      event.preventDefault()
+      handleStripeLoading()
+     
+      const { token } = await stripe.createToken({
       name: 'customer name'
     })
     
-    if(!token) return setAlert('There was a problem in Stripe', 'dark');
+    if(!token){
+      handleStopStripeLoading();
+     setAlert('There was a problem with your Stripe transaction', 'dark');
+     return
+   }
 const price = selectedProduct.price * 100;
-    const order = await axios.post('http://localhost:5000/stripe/charge', {
+//Replace code with proper
+    const order = await axios.post('/stripe/charge', {
       amount: price.toString().replace('.', ''),
       source: token.id,
       receipt_email: email,
       eventId: product.id
     })
+
     setReceiptUrl(order.data.charge.receipt_url);
     loadUser();
+   } catch(err) {
+    handleStopStripeLoading();
+     setAlert(err.message, 'danger')
+     
+     
+   }
 
 
   }
@@ -102,8 +121,8 @@ const price = selectedProduct.price * 100;
           </div>
         </label>
         <br />
-      
-        <Button  type="submit" className="order-button btn btn-primary" size="lg">
+      {stripeLoading && <Spinner />}
+        <Button  type="submit" className="order-button btn btn-primary m-2" size="lg" disabled={stripeLoading}>
         
           Pay
         </Button>

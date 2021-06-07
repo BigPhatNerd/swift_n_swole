@@ -61,13 +61,13 @@ router.post('/',
                     id: user.id
                 }
             }
-            console.log("Do I make it down here in login on the backside?")
+            
             jwt.sign(
                 payload,
                 process.env.JWT_SECRET, { expiresIn: 3600000 },
                 (err, token) => {
                     if (err) throw err;
-                    console.log({token})
+                   
                     res.json({ token });
                 });
 

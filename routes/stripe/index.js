@@ -6,8 +6,6 @@ const { User } = require('../../models')
 async function postCharge(req, res) {
 	try {
 		const { amount, source, receipt_email, eventId } = req.body
-		console.log('All up in stripe')
-		console.log("req.body in stripe: ", req.body);
 		const charge = await stripe.charges.create({
 			amount,
 			currency: 'usd',
@@ -16,9 +14,9 @@ async function postCharge(req, res) {
 		})
 		if (!charge) throw new Error('charge unsuccessful')
 		if (charge) {
-			console.log("I made it here")
+		
 			const user = await User.findOne({ email: receipt_email })
-			console.log({user})
+		
 			user.paid = true;
 			user.eventId = eventId;
 

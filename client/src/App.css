@@ -10,6 +10,9 @@
     text-align: center;
 
 }
+li.country{
+    color:  black;
+}
 
 .color-nav {
     background-color: var(--primary-color);

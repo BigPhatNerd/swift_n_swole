@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Container, Row, Button, Form } from 'react-bootstrap';
+import { Container, Row, Button, Form, Col } from 'react-bootstrap';
 import background from '../../img/amanda_snatch.jpg';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
@@ -41,7 +43,14 @@ const AddTeamMembers = ({ history }) => {
         participantDOB
     } = formData
     const onChange = e => {
+        
         setFormData({ ...formData, [e.target.name]: e.target.value })
+        console.log({formData})
+    }
+    const handlePhone = e => {
+        setFormData({...formData, participantCellPhone: e})
+        console.log({e});
+        console.log({formData})
     }
     const onSubmit = e => {
         e.preventDefault()
@@ -86,12 +95,12 @@ const AddTeamMembers = ({ history }) => {
   </Form.Group>
   <Form.Group controlId="formBasicGender">
     <Form.Label>Gender</Form.Label>
-    <Form.Control onChange={e => onChange(e)}  value={participantGender} name="participantGender" type="participantGender" placeholder="Enter Gender" />
+    <Form.Control as='select' onChange={e => onChange(e)}  value={participantGender} name="participantGender"  placeholder="Enter Gender">
+    <option value="male"> Male</option>
+    <option value="female">Female</option>
+    </Form.Control>
   </Form.Group>
-  <Form.Group controlId="formBasicCellPhone">
-    <Form.Label>Cell Phone</Form.Label>
-    <Form.Control onChange={e => onChange(e)}  value={participantCellPhone} name="participantCellPhone" type="participantCellPhone" placeholder="Enter Participant's Cell Phone" />
-  </Form.Group>
+  
   <Form.Group controlId="formBasicAddress">
     <Form.Label>Address</Form.Label>
     <Form.Control onChange={e => onChange(e)}  value={participantAddress} name="participantAddress" type="participantAddress" placeholder="Enter Participant's Address" />
@@ -113,6 +122,22 @@ const AddTeamMembers = ({ history }) => {
     <Form.Label>DOB</Form.Label>
     <Form.Control onChange={e => onChange(e)}  value={participantDOB} name="participantDOB" type="participantDOB" placeholder="Enter Participant's DOB" />
   </Form.Group>
+  <Row className="text-left">
+  <Col>
+   <Form.Group controlId="date" bsSize="large">
+          <Form.Label>DOB</Form.Label>
+          <Form.Control
+            type="date"
+          />
+        </Form.Group>
+  <Form.Group controlId="formBasicCellPhone" >
+    <Form.Label >Cell Phone</Form.Label>
+   
+<PhoneInput country='us' onChange={e => handlePhone(e)}  value={participantCellPhone} name="participantCellPhone" type="participantCellPhone" placeholder="Enter Participant's Cell Phone"/>
+   
+  </Form.Group>
+  </Col>
+  </Row>
    
   <Button variant="primary" type="submit">
     Submit
