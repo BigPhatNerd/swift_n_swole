@@ -114,11 +114,11 @@ let content = []
       <Card.Body><Form key={i+1} data-hour={i+1} onSubmit={e => onSubmit(e,i)}>
   <Form.Group controlId="formBasicBenchPress">
     <Form.Label>Bench Press</Form.Label>
-    <Form.Control key={`bench${i}`}onChange={onChange(i)}  value={formData[i]?.benchPress} name="benchPress" type="number" placeholder="Enter Bench Press Reps" />
+    <Form.Control key={`bench${i}`}onChange={onChange(i)}  value={formData[i]?.benchPress} name="benchPress" type="number" onWheel={e => e.target.blur()} placeholder="Enter Bench Press Reps" />
   </Form.Group>
   <Form.Group controlId="formBasicDeadlift">
     <Form.Label>Deadlift</Form.Label>
-    <Form.Control key={`dead${i}`}onChange={onChange(i)}  value={formData[i]?.deadlift} name="deadlift" type="text" placeholder="Enter Deadlift Reps" />
+    <Form.Control key={`dead${i}`}onChange={onChange(i)}  value={formData[i]?.deadlift} name="deadlift" type="number" onWheel={e => e.target.blur()} placeholder="Enter Deadlift Reps" />
   </Form.Group>
   <Button variant="primary" type="submit">
     Submit Hour {i + 1}
@@ -151,8 +151,8 @@ console.log({profile})
     <Card.Header >
       <Accordion.Toggle as={Card.Header} variant="link" eventKey="0" id={`toggle-miles`}>
        { profile.miles.hasSubmitted ? <>
-       	<p>Total Mileage: {profile.miles.total} miles</p>
-       	<CheckCircleIcon style={{float: 'right'}} /> 
+       	<p>Total Mileage: {profile.miles.total} miles 	<CheckCircleIcon style={{float: 'right'}} /></p>
+        
        	</> : <p>Enter Mileage</p>}
       </Accordion.Toggle>
     </Card.Header>

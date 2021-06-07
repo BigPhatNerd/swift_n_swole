@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 import RegistrationContext from '../../context/registration/registrationContext';
 
@@ -17,7 +17,8 @@ const TeamMembers = () => {
   <td>{participantCity}</td>
   <td>{participantState}</td>
   <td>
-   <Button style={{marginBottom: '.5rem', marginTop: '.2rem', backgroundColor: '#8C0000', border: 'none'}}onClick={() => deleteTeamMember(_id)}>Delete</Button>
+  <p id="delete-text" onClick={() => deleteTeamMember(_id)}>Delete</p>
+  
    </td>
     </tr>
 
@@ -25,7 +26,7 @@ const TeamMembers = () => {
     ))
     return (
 
-        <Table striped bordered size="sm" variant='dark' borderless>
+        <Table striped bordered size="sm" variant='dark' borderless >
   <thead>
     <tr>
       <th>#</th>

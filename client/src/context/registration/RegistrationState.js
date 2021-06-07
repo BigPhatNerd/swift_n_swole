@@ -49,6 +49,7 @@ const RegistrationState = props => {
 
 // Enter Scores by the hour
 const enterScore = async (formData, hour, history) => {
+	window.scrollTo(0,0);
 	try {
 			const config = {
       headers: {
@@ -80,6 +81,7 @@ const enterScore = async (formData, hour, history) => {
 //Enter mileage
 const enterMiles = async (miles, history) => {
 	try {
+		window.scrollTo(0,0);
 			const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -112,6 +114,7 @@ const enterMiles = async (miles, history) => {
 //Add Team Members to profile
 const addTeamMembers = async (formData, history) => {
 	try {
+		window.scrollTo(0,0);
 		const config = {
       headers: {
         'Content-Type': 'application/json'

@@ -1,3 +1,14 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 /* Global Styles */
 
 :root {
@@ -13,6 +24,28 @@
 li.country{
     color:  black;
 }
+@media only screen and (max-width:  600px) {
+.table-dark td, .table-dark th, .table-dark thead th{
+    font-size:  .5rem;
+}
+
+
+}
+@media only screen and (min-width:  700px) {
+.table-dark td, .table-dark th, .table-dark thead th{
+    font-size:  1.5rem;
+}
+
+
+}
+#delete-text {
+    color:  var(--primary-color);
+}
+
+#delete-text:hover{
+    color:  grey;
+}
+
 
 .color-nav {
     background-color: var(--primary-color);

@@ -56,7 +56,10 @@ router.post('/', [auth, profileValidations], async (req, res) => {
 			{ new: true, upsert: true }
 		)
 
-		var arr = []
+		
+		
+		 if(profile.miles.total === undefined){
+		 	var arr = []
 		const initialArray = () => {
 			for (var i = 0; i < 8; i++) {
 				var obj = {
@@ -72,6 +75,8 @@ router.post('/', [auth, profileValidations], async (req, res) => {
 		await initialArray()
 		profile.miles.total = 0;
 		profile.miles.hasSubmitted = false;
+	} 
+		
 
 		profile.save()
 

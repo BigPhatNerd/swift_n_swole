@@ -19,6 +19,7 @@ const EditTeamName = ({ history }) => {
     //Later add a place for team photo
     const [formData, setFormData] = useState({
         teamName: '',
+        miles: profile.miles
     })
     useEffect(() => {
         getCurrentProfile()

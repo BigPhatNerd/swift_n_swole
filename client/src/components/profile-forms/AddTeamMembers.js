@@ -31,6 +31,8 @@ const AddTeamMembers = ({ history }) => {
         participantDOB: '',
 
     })
+  
+   
     const {
         participantName,
         participantGender,
@@ -43,14 +45,11 @@ const AddTeamMembers = ({ history }) => {
         participantDOB
     } = formData
     const onChange = e => {
-        
+        if(e.target.value === "enter-gender") return
         setFormData({ ...formData, [e.target.name]: e.target.value })
-        console.log({formData})
     }
     const handlePhone = e => {
         setFormData({...formData, participantCellPhone: e})
-        console.log({e});
-        console.log({formData})
     }
     const onSubmit = e => {
         e.preventDefault()
@@ -72,17 +71,17 @@ const AddTeamMembers = ({ history }) => {
         },
 
     };
-    console.log({ profile })
+  
     return loading && profile === null ? (
         <Redirect to='/dashboard' />
     ) : (
         <div id='team-members' style={styles.container}>
 <Container className='pt-3'>
 	<Row className="justify-content-center m-2">
-		<h1>Add Team Members</h1>
+		{(profile.eventId === 100 || profile.eventId === 102) ? <h1>Add Participant Info</h1> : <h1>Add Team Members</h1>}
 	</Row>
 	<Row className="justify-content-center m-2">
-		<p>Let's get some information to assemble your team</p>
+		{(profile.eventId === 100 || profile.eventId === 102) ? <p>Let's get some information about the participant</p> : <p>Let's get some information to assemble your team</p>}
 	</Row>
 	<Form onSubmit={e => onSubmit(e)}>
   <Form.Group controlId="formBasicParticipant">
@@ -95,7 +94,8 @@ const AddTeamMembers = ({ history }) => {
   </Form.Group>
   <Form.Group controlId="formBasicGender">
     <Form.Label>Gender</Form.Label>
-    <Form.Control as='select' onChange={e => onChange(e)}  value={participantGender} name="participantGender"  placeholder="Enter Gender">
+    <Form.Control as='select'  onChange={e => onChange(e)}  value={participantGender} name="participantGender"  placeholder="Enter Gender">
+   <option value="enter-gender">Enter Gender</option>
     <option value="male"> Male</option>
     <option value="female">Female</option>
     </Form.Control>
@@ -111,24 +111,72 @@ const AddTeamMembers = ({ history }) => {
   </Form.Group>
   <Form.Group controlId="formBasicState">
     <Form.Label>State</Form.Label>
-    <Form.Control onChange={e => onChange(e)}  value={participantState} name="participantState" type="participantState" placeholder="Enter Participant's State" />
+    <Form.Control as='select' onChange={e => onChange(e)}  value={participantState} name="participantState" type="participantState" placeholder="Enter Participant's State" >
+<option value="">N/A</option>
+            <option value="AK">Alaska</option>
+            <option value="AL">Alabama</option>
+            <option value="AR">Arkansas</option>
+            <option value="AZ">Arizona</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DC">District of Columbia</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="IA">Iowa</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MD">Maryland</option>
+            <option value="ME">Maine</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MO">Missouri</option>
+            <option value="MS">Mississippi</option>
+            <option value="MT">Montana</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="NE">Nebraska</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NV">Nevada</option>
+            <option value="NY">New York</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VA">Virginia</option>
+            <option value="VT">Vermont</option>
+            <option value="WA">Washington</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WV">West Virginia</option>
+            <option value="WY">Wyoming</option>
+    </Form.Control>
   </Form.Group>
   <Form.Group controlId="formBasicZip">
     <Form.Label>Zip</Form.Label>
-    <Form.Control onChange={e => onChange(e)}  value={participantZip} name="participantZip" type="participantState" placeholder="Enter Participant's Zip" />
+    <Form.Control onChange={e => onChange(e)}  value={participantZip} name="participantZip" type="number" placeholder="Enter Participant's Zip" />
   </Form.Group>
   
-  <Form.Group controlId="formBasicDOB">
-    <Form.Label>DOB</Form.Label>
-    <Form.Control onChange={e => onChange(e)}  value={participantDOB} name="participantDOB" type="participantDOB" placeholder="Enter Participant's DOB" />
-  </Form.Group>
   <Row className="text-left">
   <Col>
-   <Form.Group controlId="date" bsSize="large">
+   <Form.Group controlId="formBasicDOB" >
           <Form.Label>DOB</Form.Label>
-          <Form.Control
-            type="date"
-          />
+          <Form.Control type="date" onChange={e => onChange(e)} value={participantDOB} name="participantDOB" placeholder="Enter Participant's DOB" />
         </Form.Group>
   <Form.Group controlId="formBasicCellPhone" >
     <Form.Label >Cell Phone</Form.Label>

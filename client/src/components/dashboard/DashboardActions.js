@@ -16,9 +16,10 @@ const DashboardActions = () => {
 			{ ((eventId === 100 && team.length < 1) || (eventId === 101 && team.length <2) || (eventId === 102 && team.length <1) || (eventId === 103 && team.length <2) || (eventId === 104 && team.length < 4) || (eventId === 105 && team.length < 4)) && <Link to="/add-team-members" className="btn btn-primary m-2">
 					Add Members
 				</Link>  }
+				{ team.length > 0 &&
 				<Link to="/enter-scores" className="btn btn-primary m-2">
 					Enter Scores
-				</Link>
+				</Link>}
 			</Row>
 			</Container>
 
