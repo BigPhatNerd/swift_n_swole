@@ -1,18 +1,6 @@
 const { Schema, model, Types } = require('mongoose')
 
 const UserSchema = new Schema({
-	firstName: {
-		type: String,
-		required: true
-	},
-	lastName: {
-		type: String,
-		required: true
-	},
-	eventId: {
-		type: Number,
-	},
-
 	email: {
 		type: String,
 		required: true,
@@ -22,18 +10,14 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
-	avatar: {
-		type: String
-	},
-	paid: {
-		type: Boolean,
-		default: false
-
-	},
 	date: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	appointments: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Appointment'
+	}]
 })
 const User = model('User', UserSchema)
 module.exports = User 

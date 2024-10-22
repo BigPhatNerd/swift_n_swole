@@ -1,18 +1,19 @@
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
+
 /* Global Styles */
 
 :root {
-    --primary-color: #8C0000;
+    --primary-color: #C70C18;
     --dark-color: #343a40;
     --light-color: #f4f4f4;
     --danger-color: #dc3545;
@@ -21,29 +22,39 @@ input[type=number] {
     text-align: center;
 
 }
-li.country{
-    color:  black;
+
+li.country {
+    color: black;
 }
-@media only screen and (max-width:  600px) {
-.table-dark td, .table-dark th, .table-dark thead th{
-    font-size:  .5rem;
-}
+
+@media only screen and (max-width: 600px) {
+
+    .table-dark td,
+    .table-dark th,
+    .table-dark thead th {
+        font-size: .5rem;
+    }
 
 
 }
-@media only screen and (min-width:  700px) {
-.table-dark td, .table-dark th, .table-dark thead th{
-    font-size:  1.5rem;
-}
+
+@media only screen and (min-width: 700px) {
+
+    .table-dark td,
+    .table-dark th,
+    .table-dark thead th {
+        font-size: 1.5rem;
+    }
 
 
 }
+
 #delete-text {
-    color:  var(--primary-color);
+    color: var(--primary-color);
 }
 
-#delete-text:hover{
-    color:  grey;
+#delete-text:hover {
+    color: grey;
 }
 
 
@@ -85,10 +96,43 @@ body,
     text-align: center;
     max-width: 100%;
     overflow-x: hidden;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 
 }
 
+@media only screen and (max-width: 768px) {
+    #cover {
+        background-attachment: scroll;
+        /* Prevents the image from looking stretched on small screens */
+        background-size: auto 100%;
+        /* Adjusts the size to maintain aspect ratio */
+        background-position: top center;
+        /* Positions the image */
+    }
+}
 
+@media only screen and (max-width: 480px) {
+    #cover {
+        background-size: auto 100%;
+        /* Ensures background fits well vertically on small screens */
+    }
+}
+
+.custom-link {
+    color: #C70C18;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+    color: #FFFFFF;
+}
 
 .card-body {
     background-color: var(--background-color);
